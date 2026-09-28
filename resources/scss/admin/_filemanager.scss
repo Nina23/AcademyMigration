@@ -1,0 +1,264 @@
+.filemanager {
+    &-modal {
+        @extend .typicms-modal;
+
+        &-open {
+            @extend .typicms-modal-open;
+        }
+
+        &-no-overlay:after {
+            display: none !important;
+        }
+
+        .wrapper {
+            @extend .typicms-modal-wrapper;
+            padding: 30px;
+        }
+    }
+
+    &-btn-close {
+        @extend .typicms-modal-btn-close;
+    }
+
+    &-btn-add {
+        @extend .typicms-modal-btn-add;
+    }
+
+    &-field-btn-add {
+        @extend .btn;
+        @extend .btn-sm;
+        @extend .btn-secondary;
+        display: flex;
+        align-items: center;
+        &-icon {
+            margin-right: 0.25rem;
+            color: rgba($white, 0.5);
+        }
+    }
+
+    &-title {
+        &-clickable {
+            cursor: pointer;
+            color: $gray-600;
+            &:hover,
+            &:focus {
+                color: $gray-900;
+            }
+        }
+        div {
+            display: inline-block;
+            &:not(:last-child):after {
+                display: inline-block;
+                content: '/';
+                color: $gray-700;
+                margin: 0 5px;
+            }
+        }
+    }
+    &-list {
+        @include clearfix;
+        margin-left: -10px;
+        margin-right: -10px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &-item {
+        position: relative;
+        width: 135px;
+        height: 135px;
+        font-size: 12px;
+        text-align: center;
+        margin: 10px;
+
+        &-with-name {
+            height: 187px;
+        }
+
+        &-editable {
+            position: relative;
+
+            &:hover &-button,
+            &:focus &-button {
+                display: flex;
+            }
+
+            &-button {
+                display: none;
+                position: absolute;
+                right: 5px;
+                top: 5px;
+                font-size: 12px;
+                border-radius: 12px;
+                background-color: $primary;
+                color: $white;
+                height: 24px;
+                width: 24px;
+                align-items: center;
+                justify-content: center;
+                border: #fff 2px solid;
+                pointer-events: auto;
+                &-icon {
+                    background-color: $white;
+                    height: 24px;
+                    width: 24px;
+                    mask-position: center;
+                    mask-repeat: no-repeat;
+                    mask-image: url('data:image/svg+xml,<svg width="0.75rem" height="0.75rem" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" > <path fill-rule="evenodd" d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" /> </svg>');
+                }
+                &:hover,
+                &:focus {
+                    color: #fff;
+                    background-color: darken($primary, 19%);
+                    text-decoration: none;
+                }
+            }
+        }
+
+        &-removable {
+            display: inline-block;
+            position: relative;
+
+            &:hover &-button,
+            &:focus &-button {
+                display: flex;
+            }
+
+            &-button {
+                display: none;
+                position: absolute;
+                right: 5px;
+                top: 5px;
+                border-radius: 12px;
+                background-color: $gray-700;
+                color: #fff;
+                height: 24px;
+                width: 24px;
+                align-items: center;
+                justify-content: center;
+                border: #fff 2px solid;
+                pointer-events: auto;
+                padding: 0;
+
+                &:hover,
+                &:focus {
+                    color: #fff;
+                    background-color: #000;
+                    text-decoration: none;
+                }
+            }
+        }
+
+        &-wrapper {
+            max-height: 187px;
+            border-radius: 3px;
+            padding-bottom: 10px;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        &-selected &-wrapper,
+        &-over &-wrapper {
+            background-color: #ddd;
+        }
+
+        &-name {
+            display: block;
+            margin: 0 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        &-image {
+            background-color: #eee;
+            max-width: 120px;
+            max-height: 120px;
+
+            &[src$='.svg'] {
+                width: 100%;
+            }
+
+            &-wrapper {
+                border-radius: 3px;
+                background-color: #fff;
+                padding: 2px;
+                border: 1px solid #ccc;
+            }
+        }
+
+        &-icon {
+            width: 135px;
+            height: 135px;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &-dragging-source {
+            opacity: 0.4;
+        }
+    }
+}
+.filemanager-view-list {
+    .filemanager-item {
+        width: 100%;
+        text-align: left;
+        margin: 0;
+
+        &:hover,
+        &:focus {
+            background-color: #eee;
+        }
+
+        &-with-name {
+            height: auto;
+        }
+
+        &-editable {
+            &-button {
+                position: static;
+            }
+        }
+
+        &-wrapper {
+            display: flex;
+            align-items: center;
+            border-radius: 0;
+            border-bottom: 1px solid #ccc;
+            padding: 0 10px;
+        }
+
+        &-selected &-wrapper,
+        &-over &-wrapper {
+            background-color: #ddd;
+        }
+
+        &-name {
+            flex-grow: 1;
+        }
+
+        &-image {
+            background-color: #ddd;
+            max-width: 40px;
+            max-height: 40px;
+
+            &-wrapper {
+                border-radius: 0;
+                padding: 0;
+                border: none;
+            }
+        }
+
+        &-icon {
+            flex-shrink: 0;
+            width: 55px;
+            height: 55px;
+            padding: 10px;
+
+            &:before {
+                font-size: 40px;
+            }
+        }
+    }
+}

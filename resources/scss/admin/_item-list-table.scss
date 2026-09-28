@@ -1,0 +1,77 @@
+.item-list-table {
+    margin-bottom: 2rem;
+
+    thead th {
+        white-space: nowrap;
+        border-top: none;
+        vertical-align: top;
+    }
+
+    img {
+        background-color: #ddd;
+    }
+
+    .checkboxes,
+    .checkbox,
+    .delete {
+        width: 30px;
+    }
+
+    .edit {
+        width: 50px;
+    }
+
+    .position {
+        width: 50px;
+    }
+
+    .status,
+    .status_translated {
+        width: 50px;
+    }
+
+    .image {
+        width: 100px;
+    }
+
+    .date,
+    .created_at,
+    .updated_at,
+    .start_date,
+    .end_date {
+        width: 160px;
+    }
+
+    .files {
+        width: 70px;
+    }
+
+    .action {
+        width: 120px;
+    }
+}
+
+.th-sort {
+    cursor: pointer;
+}
+
+.th-sort:before {
+    margin-right: 5px;
+    background-color: $gray-400;
+    display: inline-block;
+    content: '';
+    width: 0.75rem;
+    height: 0.75rem;
+    mask-repeat: no-repeat;
+    mask-image: url('data:image/svg+xml,<svg width="0.75rem" height="0.75rem" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/></svg>');
+}
+
+.th-sort-asc:before {
+    background-color: $gray-700;
+    mask-image: url('data:image/svg+xml,<svg width="0.75rem" height="0.75rem" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/></svg>');
+}
+
+.th-sort-desc:before {
+    background-color: $gray-700;
+    mask-image: url('data:image/svg+xml,<svg width="0.75rem" height="0.75rem" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
+}

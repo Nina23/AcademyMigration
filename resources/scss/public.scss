@@ -1,0 +1,102 @@
+@import 'public/bootstrap';
+@import 'node_modules/@fancyapps/fancybox/dist/jquery.fancybox';
+@import 'public/page';
+@import 'public/errors';
+@import 'public/pagination';
+@import 'public/site-header';
+@import 'public/site-footer';
+@import 'public/lang-switcher';
+@import 'public/menu-main';
+@import 'public/menu-social';
+@import 'public/menu-footer';
+@import 'public/menu-legal';
+@import 'public/swiper';
+@import 'public/anchor-top';
+@import 'public/gmaps';
+@import 'navbar';
+@import 'fancybox';
+@import 'public/navbar-hide-left-button';
+@import 'public/document-list';
+@import 'public/image-list';
+@import 'public/social-links';
+
+@import 'public/template/style';
+
+/* table of content - end
+==================================================================================================== */
+@import url("https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap");
+@font-face {
+  font-family: "PWSignaturetwo";
+  src: url("../../fonts/pw_signature_two/PWSignaturetwo.woff2") format("woff2"), url("../../fonts/pw_signature_two/PWSignaturetwo.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+/* global area - start
+==================================================================================================== */
+
+
+.skip-to-content {
+    @include sr-only;
+    @include sr-only-focusable;
+    &:active,
+    &:focus {
+        position: absolute;
+    }
+}
+
+table {
+    @extend .table;
+}
+
+blockquote {
+    color: $gray-700;
+    border-left: 5px solid $gray-300;
+    padding: 18px 25px 18px 22px;
+    background-color: $gray-100;
+    quotes: '\201C''\201D''\2018''\2019';
+    &:before {
+        color: #ccc;
+        content: open-quote;
+        font-size: 4em;
+        line-height: 0.1em;
+        vertical-align: -0.4em;
+        margin-left: -0.5rem;
+    }
+}
+
+.rich-content {
+    img {
+        @include img-fluid;
+        &[style*='float:left'] {
+            margin-right: 20px;
+        }
+        &[style*='float:right'] {
+            margin-left: 20px;
+        }
+    }
+}
+
+.head-department{
+    background:$default-light;
+}
+.document-default{
+    border-bottom: solid 1px $default-red;
+    padding:5px;
+    text-align: left;
+}
+.document-default > img{
+    height:18px!important;
+}
+.document-default > span{
+   text-transform: uppercase!important;
+   margin-right:10px;
+}
+.lang-switcher-item:last-child{
+    display: none;
+}
+
+.play-promo{
+    top:70px;
+}

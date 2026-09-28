@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Layer_1"
+   height="512"
+   viewBox="0 0 512 512"
+   width="512"
+   data-name="Layer 1"
+   version="1.1"
+   sodipodi:docname="music.svg"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15, custom)">
+  <metadata
+     id="metadata9">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs7" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     id="namedview5"
+     showgrid="false"
+     inkscape:zoom="1.4355469"
+     inkscape:cx="256"
+     inkscape:cy="256"
+     inkscape:window-x="-7"
+     inkscape:window-y="-7"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_1" />
+  <path
+     d="m407 113.285a26.186 26.186 0 0 0 -31.346-25.485l-157.872 31.99a26.03 26.03 0 0 0 -20.782 25.484v136.026c-10-11.487-24.02-18.815-40.088-18.815a52 52 0 1 0 52.088 52v-96.25l186-37.665v158.477c-10-11.2-23.864-18.326-39.7-18.326a52 52 0 1 0 52.016 52c0-2.209-.315-4.38-.315-6.517zm-250.176 241.2a40 40 0 1 1 40-40 40.046 40.046 0 0 1 -40 39.997zm52.176-148.497v-60.714a13.964 13.964 0 0 1 11.133-13.72l157.885-31.991a14.167 14.167 0 0 1 16.982 13.722v55.041zm146.176 206.734a40 40 0 1 1 39.824-45.779v5.057h.155s.022.5.022.783a39.994 39.994 0 0 1 -40.001 39.939z"
+     id="path2"
+     style="fill:#ffffff;fill-opacity:1" />
+</svg>

@@ -1,0 +1,92 @@
+@import 'admin/bootstrap';
+@import 'admin/buttons';
+@import 'node_modules/cropperjs/src/css/cropper.scss';
+@import 'navbar';
+@import 'auth';
+@import 'fancybox';
+@import 'alertify';
+@import 'admin/sortable-tree';
+@import 'admin/dropzone';
+@import 'admin/history';
+@import 'admin/selectize/selectize.bootstrap4';
+@import 'admin/sidebar';
+@import 'admin/twilight';
+@import 'admin/sortable';
+@import 'admin/filemanager';
+@import 'admin/permissions';
+@import 'admin/modal';
+@import 'admin/header';
+@import 'admin/item-list-actions';
+@import 'admin/item-list-table';
+@import 'admin/item-list-pagination';
+
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    overflow-x: hidden;
+}
+
+.container-menulinks {
+    position: static;
+}
+
+.main {
+    padding: 1.5rem;
+    @include media-breakpoint-up(md) {
+        min-height: 0;
+        margin-left: 260px;
+    }
+}
+
+h1 {
+    margin-top: 0;
+    font-weight: normal;
+    a:hover {
+        text-decoration: none;
+    }
+}
+
+.btn-status {
+    @extend .btn;
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: $primary no-repeat center;
+    transition: none;
+    mask-repeat: no-repeat;
+    &-on {
+        background-color: $primary;
+        mask-image: url('data:image/svg+xml,<svg width="1.5rem" height="1.5rem" viewBox="0 0 16 16" class="bi bi-toggle-on" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10H5zm6 9a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>');
+    }
+    &-off {
+        background-color: $gray-400;
+        mask-image: url('data:image/svg+xml,<svg width="1.5rem" height="1.5rem" viewBox="0 0 16 16" class="bi bi-toggle-off" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11 4a4 4 0 0 1 0 8H8a4.992 4.992 0 0 0 2-4 4.992 4.992 0 0 0-2-4h3zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5z"/></svg>');
+    }
+}
+
+.container-system-locales {
+    max-height: 150px;
+    overflow: scroll;
+}
+
+.tab-content {
+    padding-top: 15px;
+}
+
+.delete-attachment {
+    cursor: pointer;
+}
+
+.checkbox.form-group-translation {
+    margin-bottom: 20px;
+    & + .checkbox.form-group-translation {
+        margin-top: 10px;
+    }
+}
+
+.noscroll {
+    overflow: hidden;
+}

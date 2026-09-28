@@ -1,0 +1,41 @@
+# Environment
+.env
+.env.*
+!.env.example
+
+# PHP dependencies
+/vendor/
+
+# Node dependencies
+/node_modules/
+
+# Laravel runtime
+/storage/framework/
+/storage/logs/
+/storage/*.key
+
+# Generated/public storage
+/public/storage
+/public/hot
+/public/mix-manifest.json
+
+# PHPUnit
+.phpunit.result.cache
+.phpunit.cache/
+
+# Coverage
+/coverage/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker local overrides
+docker-compose.override.yml
+
+# Local logs
+*.log
