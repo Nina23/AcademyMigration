@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
+         bootstrap="tests/bootstrap.php"
          colors="true"
 >
     <testsuites>
@@ -21,8 +21,13 @@
         <server name="APP_ENV" value="testing"/>
         <server name="BCRYPT_ROUNDS" value="4"/>
         <server name="CACHE_DRIVER" value="array"/>
-        <!-- <server name="DB_CONNECTION" value="sqlite"/> -->
-        <!-- <server name="DB_DATABASE" value=":memory:"/> -->
+        <!-- Tests run ONLY against the dedicated testing database on the MariaDB 10.11.19 -->
+        <!-- "mariadb-test" service (see docker-compose.yml / .env.testing). tests/bootstrap.php and -->
+        <!-- Tests\TestCase refuse to run if the name does not end in "_testing" or the server is not MariaDB 10.11.19. -->
+        <server name="DB_CONNECTION" value="mysql"/>
+        <server name="DB_HOST" value="mariadb-test"/>
+        <server name="DB_DATABASE" value="akademija_testing"/>
+        <server name="FILESYSTEM_DRIVER" value="public"/>
         <server name="MAIL_MAILER" value="array"/>
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>

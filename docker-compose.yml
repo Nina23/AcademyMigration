@@ -10,18 +10,36 @@ services:
       - vendor:/var/www/html/vendor
     working_dir: /var/www/html
 
-  mysql:
-    image: mysql:8.0
+  # Development database server. Matches production exactly: MariaDB 10.11.19.
+  # Holds akademija, imported from the production dump (backups/akademija_production.sql).
+  mariadb:
+    image: mariadb:10.11.19
     environment:
-      MYSQL_DATABASE: akademija
-      MYSQL_USER: akademija
-      MYSQL_PASSWORD: akademija
-      MYSQL_ROOT_PASSWORD: root
+      MARIADB_DATABASE: akademija
+      MARIADB_USER: akademija
+      MARIADB_PASSWORD: akademija
+      MARIADB_ROOT_PASSWORD: root
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_general_ci"]
     ports:
       - "3307:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
+
+  # Test-only database server. Must match production exactly: MariaDB 10.11.19.
+  # Holds akademija_testing only; data lives in tmpfs and is rebuilt by tests/bootstrap.php.
+  mariadb-test:
+    image: mariadb:10.11.19
+    environment:
+      MARIADB_DATABASE: akademija_testing
+      MARIADB_USER: akademija
+      MARIADB_PASSWORD: akademija
+      MARIADB_ROOT_PASSWORD: root
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_general_ci"]
+    ports:
+      - "3308:3306"
+    tmpfs:
+      - /var/lib/mysql
 
 volumes:
-  mysql_data:
+  mariadb_data:
   vendor:
