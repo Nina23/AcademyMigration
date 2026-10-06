@@ -9,6 +9,10 @@ strings the Vue admin sends.
 **Read-only.** Only `GET` requests are sent, without cookies. No admin login, no
 Croppa thumbnail URLs (they would write crops to disk). The DB is checksummed
 before and after a capture to prove nothing was written.
+One known file side effect (no DB): TypiCMS `Presenter::imgNotFound()` copies
+`public/img/img-not-found.png` to `storage/app/public/` the first time a thumb is
+requested for an item without image (API `append=thumb`). Delete it afterwards if
+you want the original state back.
 
 Captured output contains production data (including user emails from
 `/api/users`), so it is written to `storage/golden-master/<label>/`, which is
