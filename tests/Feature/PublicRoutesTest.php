@@ -55,31 +55,6 @@ class PublicRoutesTest extends TestCase
         $this->get('/en/news')->assertOk()->assertDontSee('Student exhibition');
     }
 
-    public function test_news_atom_feed_renders_when_there_are_no_news()
-    {
-        $response = $this->get('/en/news/feed.xml')->assertOk();
-
-        $this->assertStringContainsString('atom', $response->headers->get('Content-Type'));
-    }
-
-    /**
-     * KNOWN EXISTING BUG (baseline, deliberately not fixed):
-     * News PublicController::feed() calls $feed->add(), which does not exist in
-     * laravelium/feed v8.0.1 (the method is addItem()). As soon as one news
-     * item exists the feed throws and returns HTTP 500 — i.e. in production.
-     * This test pins the current behaviour; if it starts failing, the feed
-     * behaviour changed (fixed, or the package changed) and must be reviewed.
-     */
-    public function test_known_bug_news_feed_with_items_returns_500()
-    {
-        $this->createNews();
-
-        $response = $this->get('/en/news/feed.xml');
-
-        $response->assertStatus(500);
-        $this->assertStringContainsString('Call to undefined method Laravelium\Feed\Feed::add()', $response->exception->getMessage());
-    }
-
     public function test_class_schedule_index_renders_where_published()
     {
         $this->get('/raspored')->assertOk();

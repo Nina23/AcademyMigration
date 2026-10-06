@@ -49,7 +49,7 @@ docker compose exec -e TEST_DB_REBUILD=0 app php vendor/bin/phpunit         # sk
 |---|---|---|
 | Infrastructure | `Feature/Infrastructure` | 3 |
 | Boot / container / routes | `Feature/Boot` | 5 |
-| Public routes (DB-driven routing, locales, views) | `Feature/PublicRoutesTest.php` | 8 |
+| Public routes (DB-driven routing, locales, views) | `Feature/PublicRoutesTest.php` | 6 |
 | Authentication | `Feature/Auth` | 5 |
 | Admin access + News admin CRUD | `Feature/Admin` | 7 |
 | Models: News, Classschedules | `Feature/Models` | 8 |
@@ -71,13 +71,11 @@ the token guard's cached user (`TestCase::apiHeaders()`), Croppa's request-bound
 | Priority | Task | Suite follow-up |
 |---|---|---|
 | **HIGH** | Fix the SQL injection in the admin list search (`FilterOr`, known issue #3): bind the search value instead of concatenating it into raw SQL. Related, lower priority: the public search (`typicms/search` PublicController) also builds raw `LIKE` SQL but escapes words with `addslashes()` (quotes verified to return 200) — replace with bindings while there. | Add a test that a search containing `'` returns 200 and matches literally. |
-| Normal | Remove the unused news RSS feed completely (route, `PublicController::feed()`, `laravelium/feed` if nothing else uses it). This also resolves known issue #1. | Delete the two feed tests in `Feature/PublicRoutesTest.php`, remove `'en::news-feed'` from `Feature/Boot/ApplicationBootTest.php`, drop issue #1 below. |
 
 ## Known issues found while building the suite (NOT fixed)
 
 | # | Issue | Status in suite |
 |---|---|---|
-| 1 | News RSS feed returns **500** as soon as one news item exists: `PublicController::feed()` calls `$feed->add()`, `laravelium/feed` v8.0.1 only has `addItem()`. Affects production. The feed is unused and will be removed in Stage 2 (not fixed). | Pinned: `test_known_bug_news_feed_with_items_returns_500` |
 | 2 | Missing / bad-token Croppa images return **500** instead of 404 (error view uses `$errors`, not shared on the Croppa route). Verified on the dev app. | Documented |
 | 3 | Admin list search (`FilterOr`) concatenates the search value into raw SQL → **SQL injection** for authenticated admins; a `'` in the search causes a 500. **HIGH priority, Stage 2.** | Documented |
 | 4 | `SlugObserver` "slug from title" branch throws *Undefined index* when slugs are empty (Spatie drops empty translations). Unreachable from the admin (validation). | Documented |

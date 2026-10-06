@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "52def55b785754b69059903c42e92ac0",
+    "content-hash": "170c65f38dab0b058e74e40fd0b682e2",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1686,75 +1686,6 @@
                 "source": "https://github.com/laravel/ui/tree/v3.2.0"
             },
             "time": "2021-01-06T19:20:22+00:00"
-        },
-        {
-            "name": "laravelium/feed",
-            "version": "v8.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Laravelium/laravel-feed.git",
-                "reference": "f1ed9141d499248c795bbf741ad30bb0ee54c93c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Laravelium/laravel-feed/zipball/f1ed9141d499248c795bbf741ad30bb0ee54c93c",
-                "reference": "f1ed9141d499248c795bbf741ad30bb0ee54c93c",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/filesystem": "^8.0",
-                "illuminate/support": "^8.0",
-                "php": ">=7.3"
-            },
-            "require-dev": {
-                "laravel/framework": "^8.0",
-                "orchestra/testbench-core": "^6.0",
-                "phpunit/phpunit": "^9.3"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Laravelium\\Feed\\FeedServiceProvider"
-                    ],
-                    "aliases": {
-                        "Feed": "Laravelium\\Feed\\Feed"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Laravelium\\Feed": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rumen Damyanov",
-                    "email": "r@alfamatter.com",
-                    "homepage": "https://darumen.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Laravelium Feed package for Laravel.",
-            "homepage": "https://laravelium.com",
-            "keywords": [
-                "atom",
-                "feed",
-                "generator",
-                "laravel",
-                "laravelium",
-                "rss"
-            ],
-            "support": {
-                "issues": "https://github.com/Laravelium/laravel-feed/issues",
-                "source": "https://github.com/Laravelium/laravel-feed",
-                "wiki": "https://github.com/Laravelium/laravel-feed/wiki"
-            },
-            "time": "2020-09-12T18:51:09+00:00"
         },
         {
             "name": "laravelium/sitemap",
@@ -10210,5 +10141,5 @@
         "php": "^7.3"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.2.0"
 }

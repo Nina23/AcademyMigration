@@ -23,7 +23,6 @@ class RouteServiceProvider extends ServiceProvider
                 if ($page->isPublished($lang) && $uri = $page->uri($lang)) {
                     Route::middleware($middleware)->prefix($uri)->name($lang.'::')->group(function (Router $router) {
                         $router->get('/', [PublicController::class, 'index'])->name('index-news');
-                        $router->get('feed.xml', [PublicController::class, 'feed'])->name('news-feed');
                         $router->get('{slug}', [PublicController::class, 'show'])->name('news');
                     });
                 }
