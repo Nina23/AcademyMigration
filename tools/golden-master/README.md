@@ -11,8 +11,9 @@ Croppa thumbnail URLs (they would write crops to disk). The DB is checksummed
 before and after a capture to prove nothing was written.
 One known file side effect (no DB): TypiCMS `Presenter::imgNotFound()` copies
 `public/img/img-not-found.png` to `storage/app/public/` the first time a thumb is
-requested for an item without image (API `append=thumb`). Delete it afterwards if
-you want the original state back.
+requested for an item without image (API `append=thumb`). Leave it in place: when
+it is missing, the parallel requests of a capture race to create it on the
+Windows bind mount and some of them fail with 500 (`Permission denied`).
 
 Captured output contains production data (including user emails from
 `/api/users`), so it is written to `storage/golden-master/<label>/`, which is
