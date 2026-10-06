@@ -69,6 +69,15 @@ function makeHandle($base, $entry, $token)
     return $ch;
 }
 
+// Warm-up: build the shared cache entries (menus, settings, model cache) once, sequentially.
+// With a cold file cache, parallel first requests race on the Windows bind mount and some
+// return 500 or pages without menus (also on the original Laravel 8.30 install).
+foreach (['/', '/en', '/sr-latn'] as $path) {
+    $ch = makeHandle($base, ['path' => $path, 'api' => false], $token);
+    curl_exec($ch);
+    curl_close($ch);
+}
+
 $index = fopen($out.'/index.tsv', 'w');
 fwrite($index, "n\tstatus\tcontent_type\tlocation\tbytes\tpath\n");
 
