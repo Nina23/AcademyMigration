@@ -71,6 +71,7 @@ the token guard's cached user (`TestCase::apiHeaders()`), Croppa's request-bound
 | Priority | Task | Suite follow-up |
 |---|---|---|
 | **HIGH** | Fix the SQL injection in the admin list search (`FilterOr`, known issue #3): bind the search value instead of concatenating it into raw SQL. Related, lower priority: the public search (`typicms/search` PublicController) also builds raw `LIKE` SQL but escapes words with `addslashes()` (quotes verified to return 200) — replace with bindings while there. | Add a test that a search containing `'` returns 200 and matches literally. |
+| Normal | Images on S3 (production): the core `Presenter::getImagePathOrDefault()` (`packages/typicms/core/src/Presenters/Presenter.php`) checks `is_file(Storage::path($path))`. On S3 `Storage::path()` returns the object key, so `is_file()` is always false and every model that uses the core presenter always shows `img-not-found.png` in production: Announcements, Classschedules, Departments, Newsletters, Tags, Menus, Users. Not fixed during the upgrade (behaviour kept); fix with `Storage::exists($path)` in the pinned core copy (record it in its `PATCHES.md`). | Add a test with an S3-like disk (or a disk whose `path()` is not a local file) that the real image is used. |
 
 ## Known issues found while building the suite (NOT fixed)
 
