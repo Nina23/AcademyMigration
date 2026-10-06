@@ -15,6 +15,8 @@
 /storage/framework/
 /storage/logs/
 /storage/*.key
+# Golden-master captures contain production data (tools/golden-master)
+/storage/golden-master/
 
 # Generated/public storage
 /public/storage
