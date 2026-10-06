@@ -3,3 +3,5 @@
 *.scss linguist-vendored
 *.js linguist-vendored
 CHANGELOG.md export-ignore
+# Pinned package copies must stay byte-identical to the original packages
+packages/** -text

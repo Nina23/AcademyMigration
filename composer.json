@@ -18,6 +18,10 @@
     ],
     "repositories": [
         {
+            "type": "path",
+            "url": "packages/*/*"
+        },
+        {
             "type": "vcs",
             "url": "https://github.com/TypiCMS/Laravel-Sidebar.git"
         }
@@ -43,22 +47,22 @@
         "spatie/eloquent-sortable": "^3.9",
         "spatie/laravel-permission": "^3.17",
         "spatie/laravel-query-builder": "^3.2.3",
-        "spatie/laravel-translatable": "^4.4",
-        "typicms/blocks": "~8.0.0",
-        "typicms/core": "~8.0.0",
-        "typicms/dashboard": "~8.0.0",
-        "typicms/events": "^9.0",
-        "typicms/history": "~8.0.0",
-        "typicms/laravel-translatable-bootforms": "~5.0",
-        "typicms/menus": "~8.0.0",
-        "typicms/nestablecollection": "~1.1.15",
-        "typicms/objects": "~8.0.0",
-        "typicms/roles": "~8.0.0",
-        "typicms/search": "~8.0.0",
-        "typicms/settings": "~8.0.0",
-        "typicms/sitemap": "~8.0.0",
-        "typicms/translations": "~8.0.0",
-        "typicms/users": "~8.0.0",
+        "spatie/laravel-translatable": "4.6.0",
+        "typicms/blocks": "8.0.0",
+        "typicms/core": "8.0.11",
+        "typicms/dashboard": "8.0.0",
+        "typicms/events": "9.0.4",
+        "typicms/history": "8.0.1",
+        "typicms/laravel-translatable-bootforms": "5.0.0",
+        "typicms/menus": "8.0.2",
+        "typicms/nestablecollection": "1.1.20",
+        "typicms/objects": "8.0.4",
+        "typicms/roles": "8.0.1",
+        "typicms/search": "8.0.0",
+        "typicms/settings": "8.0.0",
+        "typicms/sitemap": "8.0.0",
+        "typicms/translations": "8.0.0",
+        "typicms/users": "8.0.6",
         "typidesign/laravel-artisan-translations": "~1.0.3"
     },
     "require-dev": {

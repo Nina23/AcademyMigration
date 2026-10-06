@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "170c65f38dab0b058e74e40fd0b682e2",
+    "content-hash": "97645bc293f3ebdb0c1c06d6e7cb9985",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3967,20 +3967,14 @@
         {
             "name": "spatie/laravel-translatable",
             "version": "4.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/laravel-translatable.git",
-                "reference": "5900d6002a5795712058a04c7ca7c2c44b3e0850"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-translatable/zipball/5900d6002a5795712058a04c7ca7c2c44b3e0850",
-                "reference": "5900d6002a5795712058a04c7ca7c2c44b3e0850",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/spatie/laravel-translatable",
+                "reference": "f0162678353e2133fe914de54159db99b59ed08a"
             },
             "require": {
-                "illuminate/database": "^6.0|^7.0|^8.0",
-                "illuminate/support": "^6.0|^7.0|^8.0",
+                "illuminate/database": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+                "illuminate/support": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
                 "php": "^7.2|^8.0"
             },
             "require-dev": {
@@ -4000,7 +3994,19 @@
                     "Spatie\\Translatable\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Spatie\\Translatable\\Test\\": "tests"
+                }
+            },
+            "scripts": {
+                "format": [
+                    "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+                ],
+                "test": [
+                    "vendor/bin/phpunit"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -4034,17 +4040,9 @@
                 "spatie",
                 "translate"
             ],
-            "support": {
-                "issues": "https://github.com/spatie/laravel-translatable/issues",
-                "source": "https://github.com/spatie/laravel-translatable/tree/4.6.0"
-            },
-            "funding": [
-                {
-                    "url": "https://spatie.be/open-source/support-us",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-11-19T14:19:29+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -6348,19 +6346,13 @@
         {
             "name": "typicms/blocks",
             "version": "8.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TypiCMS/Blocks.git",
-                "reference": "52b1adf7f04fa33b45308df6515a7fe2098b4d57"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TypiCMS/Blocks/zipball/52b1adf7f04fa33b45308df6515a7fe2098b4d57",
-                "reference": "52b1adf7f04fa33b45308df6515a7fe2098b4d57",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/typicms/blocks",
+                "reference": "9d92280be825e30a8761a682cf2e0f668f354ece"
             },
             "require": {
-                "laravel/framework": "~8.0"
+                "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
             },
             "type": "library",
             "autoload": {
@@ -6368,7 +6360,6 @@
                     "TypiCMS\\Modules\\Blocks\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -6378,31 +6369,17 @@
                     "email": "sdebacker@gmail.com"
                 }
             ],
-            "support": {
-                "issues": "https://github.com/TypiCMS/Blocks/issues",
-                "source": "https://github.com/TypiCMS/Blocks/tree/8.0.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/typicms",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-09-22T14:14:15+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "typicms/bootforms",
             "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TypiCMS/bootforms.git",
-                "reference": "3d57a0b943aad6dd81193bdf3978ec2716c66779"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TypiCMS/bootforms/zipball/3d57a0b943aad6dd81193bdf3978ec2716c66779",
-                "reference": "3d57a0b943aad6dd81193bdf3978ec2716c66779",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/typicms/bootforms",
+                "reference": "72ff6b802e957dcb22b2ab97dce22030020201f0"
             },
             "require": {
                 "php": ">=5.5.0",
@@ -6426,7 +6403,6 @@
                     "TypiCMS\\BootForms": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -6441,34 +6417,20 @@
                 }
             ],
             "description": "Just a Formbuilder with some Bootstrap 4 specific conveniences. Remembers old input, retrieves error messages and handles all your boilerplate Bootstrap markup automatically.",
-            "support": {
-                "issues": "https://github.com/TypiCMS/bootforms/issues",
-                "source": "https://github.com/TypiCMS/bootforms/tree/2.0.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/typicms",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-09-21T11:43:51+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "typicms/core",
             "version": "8.0.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TypiCMS/Core.git",
-                "reference": "e866a563e8102a382eccaba6bbffca7220a66594"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TypiCMS/Core/zipball/e866a563e8102a382eccaba6bbffca7220a66594",
-                "reference": "e866a563e8102a382eccaba6bbffca7220a66594",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/typicms/core",
+                "reference": "b11ad2de444fee2f0ea680b95be1e8251e2d7cee"
             },
             "require": {
-                "laravel/framework": "~8.0"
+                "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
             },
             "type": "library",
             "autoload": {
@@ -6476,7 +6438,6 @@
                     "TypiCMS\\Modules\\Core\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -6486,34 +6447,20 @@
                     "email": "sdebacker@gmail.com"
                 }
             ],
-            "support": {
-                "issues": "https://github.com/TypiCMS/Core/issues",
-                "source": "https://github.com/TypiCMS/Core/tree/8.0.11"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/typicms",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-12-16T14:57:36+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "typicms/dashboard",
             "version": "8.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TypiCMS/Dashboard.git",
-                "reference": "ee90de89a9ecf47087c23101b7f38d46c4a17e8c"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TypiCMS/Dashboard/zipball/ee90de89a9ecf47087c23101b7f38d46c4a17e8c",
-                "reference": "ee90de89a9ecf47087c23101b7f38d46c4a17e8c",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/typicms/dashboard",
+                "reference": "aba7b57b8630831bee20341a38de25a5862fc2e4"
             },
             "require": {
-                "laravel/framework": "~8.0"
+                "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
             },
             "type": "library",
             "autoload": {
@@ -6521,7 +6468,6 @@
                     "TypiCMS\\Modules\\Dashboard\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -6531,35 +6477,21 @@
                     "email": "sdebacker@gmail.com"
                 }
             ],
-            "support": {
-                "issues": "https://github.com/TypiCMS/Dashboard/issues",
-                "source": "https://github.com/TypiCMS/Dashboard/tree/8.0.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/typicms",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-09-22T21:21:20+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "typicms/events",
             "version": "9.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TypiCMS/Events.git",
-                "reference": "666c7e7e530ab9d8606415bb1b334c1e79df6354"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TypiCMS/Events/zipball/666c7e7e530ab9d8606415bb1b334c1e79df6354",
-                "reference": "666c7e7e530ab9d8606415bb1b334c1e79df6354",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/typicms/events",
+                "reference": "75061454dbb9e0aa9f6e15277442adc593956b1f"
             },
             "require": {
                 "eluceo/ical": "^0.16",
-                "laravel/framework": "~8.0"
+                "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
             },
             "type": "library",
             "autoload": {
@@ -6567,7 +6499,6 @@
                     "TypiCMS\\Modules\\Events\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -6577,31 +6508,17 @@
                     "email": "sdebacker@gmail.com"
                 }
             ],
-            "support": {
-                "issues": "https://github.com/TypiCMS/Events/issues",
-                "source": "https://github.com/TypiCMS/Events/tree/9.0.4"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/typicms",
-                    "type": "github"
-                }
-            ],
-            "time": "2021-02-25T14:30:06+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "typicms/form",
             "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TypiCMS/form.git",
-                "reference": "3c0b846b8b2196602778274c3328f7fb29aa6e34"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TypiCMS/form/zipball/3c0b846b8b2196602778274c3328f7fb29aa6e34",
-                "reference": "3c0b846b8b2196602778274c3328f7fb29aa6e34",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/typicms/form",
+                "reference": "1f7e86cf69fba887dae539a54478e0877595dfe2"
             },
             "require": {
                 "php": ">=5.5.0"
@@ -6625,7 +6542,11 @@
                     "TypiCMS\\Form": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "classmap": [
+                    "tests/"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -6640,34 +6561,20 @@
                 }
             ],
             "description": "A basic framework agnostic form building package with a few extra niceties like remembering old input and retrieving error messages.",
-            "support": {
-                "issues": "https://github.com/TypiCMS/form/issues",
-                "source": "https://github.com/TypiCMS/form/tree/2.0.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/typicms",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-09-21T11:44:00+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "typicms/history",
             "version": "8.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TypiCMS/History.git",
-                "reference": "7f65f1df8e048f66f387001a68b39451700bcddd"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TypiCMS/History/zipball/7f65f1df8e048f66f387001a68b39451700bcddd",
-                "reference": "7f65f1df8e048f66f387001a68b39451700bcddd",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/typicms/history",
+                "reference": "fb54ce98c026184fad79ea4a5f92fd96e8e29905"
             },
             "require": {
-                "laravel/framework": "~8.0"
+                "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
             },
             "type": "library",
             "autoload": {
@@ -6675,7 +6582,6 @@
                     "TypiCMS\\Modules\\History\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -6685,31 +6591,17 @@
                     "email": "sdebacker@gmail.com"
                 }
             ],
-            "support": {
-                "issues": "https://github.com/TypiCMS/History/issues",
-                "source": "https://github.com/TypiCMS/History/tree/8.0.1"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/typicms",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-11-10T12:36:34+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "typicms/laravel-translatable-bootforms",
             "version": "5.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TypiCMS/Laravel-Translatable-Bootforms.git",
-                "reference": "f835ea08b67f973f882ce8ffc3c7acd3f0457df6"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TypiCMS/Laravel-Translatable-Bootforms/zipball/f835ea08b67f973f882ce8ffc3c7acd3f0457df6",
-                "reference": "f835ea08b67f973f882ce8ffc3c7acd3f0457df6",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/typicms/laravel-translatable-bootforms",
+                "reference": "14345d0f454aef2f56db2691be569114bd521ed9"
             },
             "require": {
                 "illuminate/support": ">=5.8",
@@ -6736,7 +6628,11 @@
                     "TypiCMS\\LaravelTranslatableBootForms\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "TypiCMS\\LaravelTranslatableBootForms\\Tests\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -6758,34 +6654,20 @@
                 "laravel",
                 "translatable"
             ],
-            "support": {
-                "issues": "https://github.com/TypiCMS/Laravel-Translatable-Bootforms/issues",
-                "source": "https://github.com/TypiCMS/Laravel-Translatable-Bootforms/tree/5.0.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/typicms",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-09-21T11:54:10+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "typicms/menus",
             "version": "8.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TypiCMS/Menus.git",
-                "reference": "91dfacde22dec5a55c34a8d1cc9dce7c5ffdc213"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TypiCMS/Menus/zipball/91dfacde22dec5a55c34a8d1cc9dce7c5ffdc213",
-                "reference": "91dfacde22dec5a55c34a8d1cc9dce7c5ffdc213",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/typicms/menus",
+                "reference": "62b36eed5be5cbfc42c875745076a10efeac85ea"
             },
             "require": {
-                "laravel/framework": "~8.0"
+                "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
             },
             "type": "library",
             "autoload": {
@@ -6793,7 +6675,6 @@
                     "TypiCMS\\Modules\\Menus\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -6803,35 +6684,21 @@
                     "email": "sdebacker@gmail.com"
                 }
             ],
-            "support": {
-                "issues": "https://github.com/TypiCMS/Menus/issues",
-                "source": "https://github.com/TypiCMS/Menus/tree/8.0.2"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/typicms",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-12-11T22:22:32+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "typicms/nestablecollection",
             "version": "1.1.20",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TypiCMS/NestableCollection.git",
-                "reference": "f98feb398cde33d577acac0d8fc74c0d5d25207b"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TypiCMS/NestableCollection/zipball/f98feb398cde33d577acac0d8fc74c0d5d25207b",
-                "reference": "f98feb398cde33d577acac0d8fc74c0d5d25207b",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/typicms/nestablecollection",
+                "reference": "304ab3cc6805872f77c186e14913fa92ad9d38a9"
             },
             "require": {
-                "illuminate/database": "~4.2|~5.0|~6.0|~7.0|~8.0",
-                "illuminate/support": "~4.2|~5.0|~6.0|~7.0|~8.0"
+                "illuminate/database": "~4.2|~5.0|~6.0|~7.0|~8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+                "illuminate/support": "~4.2|~5.0|~6.0|~7.0|~8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
             },
             "type": "library",
             "autoload": {
@@ -6839,7 +6706,6 @@
                     "TypiCMS\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -6851,45 +6717,30 @@
             ],
             "description": "A Laravel Package that extends Collection to handle unlimited nested items following adjacency list model.",
             "keywords": [
+                "Collection",
+                "Eloquent",
+                "Laravel",
                 "TypiCMS",
                 "adjacency list",
-                "collection",
-                "eloquent",
-                "laravel",
                 "nested set",
                 "tree"
             ],
-            "support": {
-                "issues": "https://github.com/TypiCMS/NestableCollection/issues",
-                "source": "https://github.com/TypiCMS/NestableCollection/tree/1.1.20"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/typicms",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-09-30T08:16:40+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "typicms/objects",
             "version": "8.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TypiCMS/Objects.git",
-                "reference": "7161344f48aa9db2b6e8a140dd7d9433f90a93fa"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TypiCMS/Objects/zipball/7161344f48aa9db2b6e8a140dd7d9433f90a93fa",
-                "reference": "7161344f48aa9db2b6e8a140dd7d9433f90a93fa",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/typicms/objects",
+                "reference": "d57976b3a46b4b0e61deb199f2671e0a39914640"
             },
             "require": {
-                "laravel/framework": "~8.0"
+                "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
             },
             "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -6899,34 +6750,20 @@
                     "email": "sdebacker@gmail.com"
                 }
             ],
-            "support": {
-                "issues": "https://github.com/TypiCMS/Objects/issues",
-                "source": "https://github.com/TypiCMS/Objects/tree/8.0.4"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/typicms",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-12-17T11:12:33+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "typicms/roles",
             "version": "8.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TypiCMS/Roles.git",
-                "reference": "c664d930e0b305a37c7813630c4806ff8298578d"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TypiCMS/Roles/zipball/c664d930e0b305a37c7813630c4806ff8298578d",
-                "reference": "c664d930e0b305a37c7813630c4806ff8298578d",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/typicms/roles",
+                "reference": "e7543859531a1da5c5819ab225c6c04284b19bd5"
             },
             "require": {
-                "laravel/framework": "~8.0"
+                "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
             },
             "type": "library",
             "autoload": {
@@ -6934,7 +6771,6 @@
                     "TypiCMS\\Modules\\Roles\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -6944,34 +6780,20 @@
                     "email": "sdebacker@gmail.com"
                 }
             ],
-            "support": {
-                "issues": "https://github.com/TypiCMS/Roles/issues",
-                "source": "https://github.com/TypiCMS/Roles/tree/8.0.1"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/typicms",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-10-01T12:14:34+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "typicms/search",
             "version": "8.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TypiCMS/Search.git",
-                "reference": "f4ac2d6c20504f97fc1bf8696d4475f38289d32a"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TypiCMS/Search/zipball/f4ac2d6c20504f97fc1bf8696d4475f38289d32a",
-                "reference": "f4ac2d6c20504f97fc1bf8696d4475f38289d32a",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/typicms/search",
+                "reference": "9c304bee3db9b78e8dba68ad6d367096751731dc"
             },
             "require": {
-                "laravel/framework": "~8.0"
+                "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
             },
             "type": "library",
             "autoload": {
@@ -6979,7 +6801,6 @@
                     "TypiCMS\\Modules\\Search\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -6989,34 +6810,20 @@
                     "email": "sdebacker@gmail.com"
                 }
             ],
-            "support": {
-                "issues": "https://github.com/TypiCMS/Search/issues",
-                "source": "https://github.com/TypiCMS/Search/tree/8.0.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/typicms",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-10-01T08:24:58+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "typicms/settings",
             "version": "8.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TypiCMS/Settings.git",
-                "reference": "44a34e276026c3ba7bc064bad2365e0fd6f669cb"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TypiCMS/Settings/zipball/44a34e276026c3ba7bc064bad2365e0fd6f669cb",
-                "reference": "44a34e276026c3ba7bc064bad2365e0fd6f669cb",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/typicms/settings",
+                "reference": "8418a99270383d995e0f7011ebf483bcb82451ca"
             },
             "require": {
-                "laravel/framework": "~8.0"
+                "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
             },
             "type": "library",
             "autoload": {
@@ -7024,7 +6831,6 @@
                     "TypiCMS\\Modules\\Settings\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -7034,34 +6840,20 @@
                     "email": "sdebacker@gmail.com"
                 }
             ],
-            "support": {
-                "issues": "https://github.com/TypiCMS/Settings/issues",
-                "source": "https://github.com/TypiCMS/Settings/tree/8.0.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/typicms",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-09-24T20:37:42+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "typicms/sitemap",
             "version": "8.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TypiCMS/Sitemap.git",
-                "reference": "44e51066784a9da39cf61923c2f3cb4752ca8d4f"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TypiCMS/Sitemap/zipball/44e51066784a9da39cf61923c2f3cb4752ca8d4f",
-                "reference": "44e51066784a9da39cf61923c2f3cb4752ca8d4f",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/typicms/sitemap",
+                "reference": "4ce1dbdda79f01e7ae6e364ddc6b28f0db856419"
             },
             "require": {
-                "laravel/framework": "~8.0",
+                "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
                 "laravelium/sitemap": "~8.0"
             },
             "type": "library",
@@ -7070,7 +6862,6 @@
                     "TypiCMS\\Modules\\Sitemap\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -7080,34 +6871,20 @@
                     "email": "sdebacker@gmail.com"
                 }
             ],
-            "support": {
-                "issues": "https://github.com/TypiCMS/Sitemap/issues",
-                "source": "https://github.com/TypiCMS/Sitemap/tree/8.0.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/typicms",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-09-21T18:52:11+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "typicms/translations",
             "version": "8.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TypiCMS/Translations.git",
-                "reference": "7c824a724504f4935774c61d968697c359f5dbd6"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TypiCMS/Translations/zipball/7c824a724504f4935774c61d968697c359f5dbd6",
-                "reference": "7c824a724504f4935774c61d968697c359f5dbd6",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/typicms/translations",
+                "reference": "13fa26f3153decdc8876bf52d7c398aa983a3cf1"
             },
             "require": {
-                "laravel/framework": "~8.0"
+                "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
             },
             "type": "library",
             "autoload": {
@@ -7115,7 +6892,6 @@
                     "TypiCMS\\Modules\\Translations\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -7125,34 +6901,20 @@
                     "email": "sdebacker@gmail.com"
                 }
             ],
-            "support": {
-                "issues": "https://github.com/TypiCMS/Translations/issues",
-                "source": "https://github.com/TypiCMS/Translations/tree/8.0.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/typicms",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-09-24T20:37:36+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "typicms/users",
             "version": "8.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/TypiCMS/Users.git",
-                "reference": "50acad7ef381088b8970be3a6934d1c3572795f5"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/TypiCMS/Users/zipball/50acad7ef381088b8970be3a6934d1c3572795f5",
-                "reference": "50acad7ef381088b8970be3a6934d1c3572795f5",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/typicms/users",
+                "reference": "7184bd091f2868c8b0c8c97a73fe02816553acbb"
             },
             "require": {
-                "laravel/framework": "~8.0"
+                "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
             },
             "type": "library",
             "autoload": {
@@ -7160,7 +6922,6 @@
                     "TypiCMS\\Modules\\Users\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -7170,17 +6931,9 @@
                     "email": "sdebacker@gmail.com"
                 }
             ],
-            "support": {
-                "issues": "https://github.com/TypiCMS/Users/issues",
-                "source": "https://github.com/TypiCMS/Users/tree/8.0.6"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/typicms",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-10-09T16:47:29+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "typidesign/laravel-artisan-translations",
