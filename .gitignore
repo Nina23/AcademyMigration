@@ -14,6 +14,7 @@
 # Laravel runtime
 /storage/framework/
 /storage/logs/
+/storage/app/
 /storage/*.key
 # Golden-master captures contain production data (tools/golden-master)
 /storage/golden-master/
