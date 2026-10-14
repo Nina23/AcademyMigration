@@ -2,6 +2,7 @@
 
 namespace TypiCMS\Modules\Files\Presenters;
 
+use Exception;
 use Illuminate\Support\Facades\Storage;
 use TypiCMS\Modules\Core\Presenters\Presenter;
 use Illuminate\Support\Facades\Log;
@@ -37,9 +38,14 @@ class ModulePresenter extends Presenter
     protected function getImagePathOrDefault()
     {
 
+        // No Storage::exists() here: on S3 it is one HTTP request per file, and the
+        // file manager serializes every file of a folder (and its children).
         $path = '';
-        if (Storage::exists($this->entity->path)) {
-            $path = Storage::url($this->entity->path);
+        if ($this->entity->path) {
+            try {
+                $path = Storage::url($this->entity->path);
+            } catch (Exception $e) {
+            }
         }
         return $path;
 
