@@ -49,7 +49,7 @@ class ApplicationBootTest extends TestCase
         // DB-backed page registry used to build module routes.
         $this->assertSame(2, TypiCMS::getPageLinkedToModule('news')->id);
 
-        foreach (['translator', 'Settings', 'filesystem.default.driver', 'Bkwld\Croppa\Helpers', 'feed', 'excel'] as $abstract) {
+        foreach (['translator', 'Settings', 'filesystem.default.driver', 'Bkwld\Croppa\Helpers', 'excel'] as $abstract) {
             $this->assertNotNull($this->app->make($abstract), "Could not resolve [{$abstract}].");
         }
     }
@@ -63,7 +63,7 @@ class ApplicationBootTest extends TestCase
             'dashboard', 'admin::index-news', 'admin::create-news', 'admin::store-news', 'admin::update-news',
             'admin::index-pages', 'admin::index-files', 'admin::index-classschedules', 'admin::store-class-schedule-item',
             // DB-driven public module routes
-            'sr::index-news', 'sr::news', 'sr-latn::news', 'en::news', 'en::news-feed',
+            'sr::index-news', 'sr::news', 'sr-latn::news', 'en::news',
             'sr::index-classschedules', 'sr-latn::index-classschedules',
         ];
 

@@ -1,0 +1,38 @@
+{
+    "name": "typicms/bootforms",
+    "version": "2.0.0",
+    "description": "Just a Formbuilder with some Bootstrap 4 specific conveniences. Remembers old input, retrieves error messages and handles all your boilerplate Bootstrap markup automatically.",
+    "authors": [
+        {
+            "name": "Adam Wathan",
+            "email": "adam.wathan@gmail.com"
+        },
+        {
+            "name": "Samuel De Backer",
+            "email": "sdebacker@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.5.0",
+        "typicms/form": "^2.0.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "mockery/mockery": "1.3.1",
+        "php-coveralls/php-coveralls": "2.0.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "TypiCMS\\BootForms": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TypiCMS\\BootForms\\BootFormsServiceProvider"
+            ]
+        }
+    }
+}

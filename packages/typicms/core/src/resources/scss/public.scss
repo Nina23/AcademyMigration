@@ -1,0 +1,74 @@
+@import 'public/bootstrap';
+@import 'node_modules/@fancyapps/fancybox/dist/jquery.fancybox';
+@import 'public/page';
+@import 'public/errors';
+@import 'public/pagination';
+@import 'public/site-header';
+@import 'public/site-footer';
+@import 'public/lang-switcher';
+@import 'public/menu-main';
+@import 'public/menu-social';
+@import 'public/menu-footer';
+@import 'public/menu-legal';
+@import 'public/swiper';
+@import 'public/anchor-top';
+@import 'public/gmaps';
+@import 'public/forum';
+@import 'navbar';
+@import 'fancybox';
+@import 'public/navbar-hide-left-button';
+@import 'public/document-list';
+@import 'public/image-list';
+@import 'public/social-links';
+
+.skip-to-content {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 100vw;
+    top: 0;
+    z-index: 1000;
+    &-link {
+        @include sr-only;
+        @include sr-only-focusable;
+        &:active,
+        &:focus {
+            background-color: $black;
+            color: $white;
+            padding: 0.25rem 1rem;
+            text-decoration: none;
+        }
+    }
+}
+
+table {
+    @extend .table;
+}
+
+blockquote {
+    color: $gray-700;
+    border-left: 5px solid $gray-300;
+    padding: 18px 25px 18px 22px;
+    background-color: $gray-100;
+    quotes: '\201C''\201D''\2018''\2019';
+    &:before {
+        color: #ccc;
+        content: open-quote;
+        font-size: 4em;
+        line-height: 0.1em;
+        vertical-align: -0.4em;
+        margin-left: -0.5rem;
+    }
+}
+
+.rich-content {
+    img {
+        @include img-fluid;
+        &[style*='float:left'] {
+            margin-right: 20px;
+        }
+        &[style*='float:right'] {
+            margin-left: 20px;
+        }
+    }
+}

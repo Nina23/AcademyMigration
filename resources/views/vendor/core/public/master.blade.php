@@ -48,8 +48,6 @@
 	</script>
 
 
-    @include('core::public._feed-links')
-
     @stack('css')
 
 </head>
