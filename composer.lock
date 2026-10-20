@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3524ec50704fa0f69466799f69bbeb9f",
+    "content-hash": "f415613c83af88f978d57bb939537d92",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -935,61 +935,6 @@
                 }
             ],
             "time": "2020-12-29T14:50:06+00:00"
-        },
-        {
-            "name": "eluceo/ical",
-            "version": "0.16.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/markuspoerschke/iCal.git",
-                "reference": "7043337feaeacbc016844e7e52ef41bba504ad8f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/markuspoerschke/iCal/zipball/7043337feaeacbc016844e7e52ef41bba504ad8f",
-                "reference": "7043337feaeacbc016844e7e52ef41bba504ad8f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1 || ~8.0.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7.0"
-            },
-            "suggest": {
-                "ext-mbstring": "Massive performance enhancement of line folding"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Eluceo\\iCal\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Markus Poerschke",
-                    "email": "markus@eluceo.de",
-                    "role": "Developer"
-                }
-            ],
-            "description": "The eluceo/iCal package offers a abstraction layer for creating iCalendars. You can easily create iCal files by using PHP object instead of typing your *.ics file by hand. The output will follow RFC 5545 as best as possible.",
-            "homepage": "https://github.com/markuspoerschke/iCal",
-            "keywords": [
-                "calendar",
-                "iCalendar",
-                "ical",
-                "ics",
-                "php calendar"
-            ],
-            "support": {
-                "issues": "https://github.com/markuspoerschke/iCal/issues",
-                "source": "https://github.com/markuspoerschke/iCal"
-            },
-            "time": "2020-10-04T17:41:11+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -7266,37 +7211,6 @@
             }
         },
         {
-            "name": "typicms/events",
-            "version": "9.0.4",
-            "dist": {
-                "type": "path",
-                "url": "packages/typicms/events",
-                "reference": "75061454dbb9e0aa9f6e15277442adc593956b1f"
-            },
-            "require": {
-                "eluceo/ical": "^0.16",
-                "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "TypiCMS\\Modules\\Events\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Samuel De Backer",
-                    "email": "sdebacker@gmail.com"
-                }
-            ],
-            "transport-options": {
-                "relative": true
-            }
-        },
-        {
             "name": "typicms/form",
             "version": "2.0.0",
             "dist": {
@@ -7508,31 +7422,6 @@
                 "adjacency list",
                 "nested set",
                 "tree"
-            ],
-            "transport-options": {
-                "relative": true
-            }
-        },
-        {
-            "name": "typicms/objects",
-            "version": "8.0.4",
-            "dist": {
-                "type": "path",
-                "url": "packages/typicms/objects",
-                "reference": "d57976b3a46b4b0e61deb199f2671e0a39914640"
-            },
-            "require": {
-                "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
-            },
-            "type": "library",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Samuel De Backer",
-                    "email": "sdebacker@gmail.com"
-                }
             ],
             "transport-options": {
                 "relative": true
