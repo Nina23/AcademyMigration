@@ -1,5 +1,23 @@
 <?php
 
+// Amazon S3 disk (production). Defined once so that "croppa_crops" below
+// is always the same disk configuration.
+$s3 = [
+    'driver' => 's3',
+    'key' => env('AWS_ACCESS_KEY_ID'),
+    'secret' => env('AWS_SECRET_ACCESS_KEY'),
+    'region' => env('AWS_DEFAULT_REGION'),
+    'bucket' => env('AWS_BUCKET'),
+    'url' => env('AWS_URL'),
+    'endpoint' => env('AWS_ENDPOINT'),
+    // false = AWS virtual-hosted URLs as before; true only for an S3 emulator (MinIO).
+    'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+    'visibility' => 'public',
+    // Laravel 9+ returns false on failed writes/deletes unless 'throw' is true;
+    // true keeps the Laravel 8 behaviour (an exception, nothing saved).
+    'throw' => true,
+];
+
 return [
 
     /*
@@ -55,16 +73,12 @@ return [
             'visibility' => 'public',
         ],
 
-        's3' => [
-            'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
-            'endpoint' => env('AWS_ENDPOINT'),
-            'visibility' => 'public',
-        ],
+        's3' => $s3,
+
+        // Crops disk for Croppa when the default disk is s3 (see config/croppa.php):
+        // the same bucket and settings as "s3", but url() points to the app host,
+        // so a rendered thumbnail is redirected to /<crop path> as with Croppa 4.
+        'croppa_crops' => array_merge($s3, ['url' => env('APP_URL')]),
 
     ],
 

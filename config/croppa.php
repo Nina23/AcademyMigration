@@ -1,5 +1,23 @@
 <?php
 
+/*
+ * Disks (Croppa 8 uses disk names).
+ *
+ * Source images and crops live on the default disk, as with Croppa 4. Read
+ * FILESYSTEM_DRIVER here, not config('filesystems.default'): config files are
+ * loaded in name order, so filesystems.php is not loaded yet at this point.
+ *
+ * - Default disk s3 (production): crops go to "croppa_crops" (config/filesystems.php),
+ *   the same bucket and settings as "s3" but with url = APP_URL. Croppa 8 redirects a
+ *   rendered crop to the crops disk's url(), so the redirect stays /<crop path> on the
+ *   app host exactly as Croppa 4 did (it had no url_prefix configured).
+ * - Any other default disk (local/public in dev and tests): crops on the default disk,
+ *   served directly, as before.
+ * - tmp_disk: Croppa 8 copies a remote (s3) source to this disk before decoding it,
+ *   so it must be a local disk.
+ */
+$defaultDisk = env('FILESYSTEM_DRIVER', 'local');
+
 return [
     /*
     |-----------------------------------------------------------------------------
@@ -8,26 +26,19 @@ return [
     */
 
     /*
-     * The directory where source images are found. This is generally where your
-     * admin stores uploaded files. Can be either an absolute path to your local
-     * disk (the default) or the name of an IoC binding of a Flysystem instance.
-     *
-     * @var string		 Absolute path in local fileystem
-     *			| string	 IoC binding name of League\Flysystem\Filesystem
-     *			| string	 IoC binding name of League\Flysystem\Cached\CachedAdapter
+     * The disk where source images are found (where the admin stores uploads).
      */
-    'src_dir' => 'filesystem.default.driver',
+    'src_disk' => $defaultDisk,
 
     /*
-     * The directory where cropped images should be saved. The route to the
-     * cropped versions is what should be rendered in your markup; it must be a
-     * web accessible directory.
-     *
-     * @var string		 Absolute path in local fileystem
-     *			| string	 IoC binding name of League\Flysystem\Filesystem
-     *			| string	 IoC binding name of League\Flysystem\Cached\CachedAdapter
+     * The disk where cropped images are saved (see the comment at the top).
      */
-    'crops_dir' => 'filesystem.default.driver',
+    'crops_disk' => $defaultDisk === 's3' ? 'croppa_crops' : $defaultDisk,
+
+    /*
+     * Local disk for temporary copies of remote source images.
+     */
+    'tmp_disk' => 'local',
 
     /*
      * Maximum number of sizes to allow for a particular source file. This is to
@@ -69,13 +80,6 @@ return [
     'ignore' => '\.(gif|GIF)$',
 
     /*
-     * A string that is prepended to the path captured by the `path` pattern
-     * (above) that is used to from the URL to crops.
-     */
-    // 'url_prefix' => '//'.Request::getHttpHost().'/uploads/',         // Local
-    // 'url_prefix' => 'https://your-bucket.s3.amazonaws.com/uploads/', // S3
-
-    /*
      * Reject attempts to maliciously create images by signing the generated
      * request with a hash based on the request parameters and this signing key.
      * Set to 'app.key' to use Laravel's `app.key` config, any other string to use
@@ -110,7 +114,7 @@ return [
      *
      * @var integer
      */
-    'jpeg_quality' => 75,
+    'quality' => 75,
 
     /*
      * Turn on interlacing to make progessive jpegs.
@@ -125,7 +129,7 @@ return [
      *
      * @var boolean
      */
-    'upscale' => true,
+    'upsize' => true,
 
     /*
      * Filters for adding additional GD effects to an image and using them as parameter

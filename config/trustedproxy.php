@@ -45,6 +45,11 @@ return [
      *
      * @link https://symfony.com/doc/current/deployment/proxies.html
      */
-    'headers' => Illuminate\Http\Request::HEADER_X_FORWARDED_ALL,
+    // HEADER_X_FORWARDED_ALL no longer exists (Symfony 6); this is the set it stood for.
+    // Laravel 9's TrustProxies reads only 'proxies' from this file (headers come from the middleware).
+    'headers' => Illuminate\Http\Request::HEADER_X_FORWARDED_FOR |
+        Illuminate\Http\Request::HEADER_X_FORWARDED_HOST |
+        Illuminate\Http\Request::HEADER_X_FORWARDED_PORT |
+        Illuminate\Http\Request::HEADER_X_FORWARDED_PROTO,
 
 ];
