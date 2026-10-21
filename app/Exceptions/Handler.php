@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 
@@ -82,6 +83,22 @@ class Handler extends ExceptionHandler
         }
 
         return $this->convertExceptionToResponse($e);
+    }
+
+    /**
+     * Convert a validation exception into a JSON response.
+     *
+     * Keeps the Laravel 8 API contract: the admin Vue app shows "message", which
+     * Laravel 9+ would replace with the first error text ("... (and N more errors)").
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function invalidJson($request, ValidationException $exception)
+    {
+        return response()->json([
+            'message' => 'The given data was invalid.',
+            'errors' => $exception->errors(),
+        ], $exception->status);
     }
 
     /**
