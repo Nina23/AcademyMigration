@@ -43,7 +43,7 @@
         "msurguy/honeypot": "~1.1.5",
         "spatie/eloquent-sortable": "^4.5",
         "spatie/laravel-permission": "^6.25",
-        "spatie/laravel-query-builder": "^5.7",
+        "spatie/laravel-query-builder": "5.7.0",
         "spatie/laravel-translatable": "4.6.0",
         "symfony/http-client": "^6.4",
         "symfony/mailgun-mailer": "^6.4",

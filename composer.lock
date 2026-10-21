@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8d8f06ebe7a23bab9c131ba9b097ee8a",
+    "content-hash": "3ab633a1e3aa6392d63a57bacd299d53",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -4740,16 +4740,10 @@
         {
             "name": "spatie/laravel-query-builder",
             "version": "5.7.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/laravel-query-builder.git",
-                "reference": "ff61a9ea32c5b55cbe63de8e3c6e35a201e6b746"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-query-builder/zipball/ff61a9ea32c5b55cbe63de8e3c6e35a201e6b746",
-                "reference": "ff61a9ea32c5b55cbe63de8e3c6e35a201e6b746",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/spatie/laravel-query-builder",
+                "reference": "658f24756b319de2ce796b91fb1a40d0e1665f0a"
             },
             "require": {
                 "illuminate/database": "^9.0|^10.0",
@@ -4781,7 +4775,19 @@
                     "Spatie\\QueryBuilder\\Database\\Factories\\": "database/factories"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Spatie\\QueryBuilder\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "vendor/bin/pest"
+                ],
+                "test-coverage": [
+                    "phpunit --coverage-html coverage"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -4803,13 +4809,9 @@
                 "issues": "https://github.com/spatie/laravel-query-builder/issues",
                 "source": "https://github.com/spatie/laravel-query-builder"
             },
-            "funding": [
-                {
-                    "url": "https://spatie.be/open-source/support-us",
-                    "type": "custom"
-                }
-            ],
-            "time": "2024-01-08T09:57:13+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "spatie/laravel-translatable",
