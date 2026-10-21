@@ -1,10 +1,7 @@
-FROM php:7.4-apache
+# Debian release pinned (bookworm) until the production OS is confirmed (STEP1_PLAN D-S1-4).
+FROM php:8.1-apache-bookworm
 
-RUN sed -i '/bullseye-security/d' /etc/apt/sources.list \
-    && sed -i '/bullseye-updates/d' /etc/apt/sources.list \
-    && sed -i 's|deb.debian.org/debian|archive.debian.org/debian|g' /etc/apt/sources.list \
-    && echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until \
-    && apt-get update \
+RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         libpng-dev \
         libjpeg62-turbo-dev \
