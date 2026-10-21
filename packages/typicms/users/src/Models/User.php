@@ -16,6 +16,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Laracasts\Presenter\PresentableTrait;
+use Spatie\Permission\Guard;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
 use TypiCMS\Modules\History\Traits\Historable;
@@ -88,6 +89,17 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function isSuperUser(): bool
     {
         return (bool) $this->superuser;
+    }
+
+    /**
+     * Guard used for permission checks when none is given: the first guard of
+     * this model ("web"), as in spatie/laravel-permission 3. Permission 6 would
+     * use the guard of the current request instead ("api" on the admin API),
+     * where no permission exists, so every non-superuser would get 403.
+     */
+    protected function getDefaultGuardName(): string
+    {
+        return Guard::getNames($this)->first() ?: config('auth.defaults.guard');
     }
 
     public function getAllPermissionsAttribute(): array
