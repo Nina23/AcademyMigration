@@ -55,7 +55,7 @@ docker compose exec -e TEST_DB_REBUILD=0 app php vendor/bin/phpunit         # sk
 | Models: News, Classschedules | `Feature/Models` | 8 |
 | **Translations** (storage, fallback, JSON queries) | `Feature/Translations` | 13 |
 | Images / uploads / Croppa | `Feature/Images` | 7 |
-| API (News, Pages, Classschedules; 422 message, `append=` columns) | `Feature/Api` | 11 |
+| API (News, Pages, Classschedules; 422 message, `append=` columns, file manager folders on an S3 disk) | `Feature/Api` | 12 |
 | Laravel examples (unchanged) | `Unit`, `Feature/ExampleTest.php` | 2 |
 
 ## Test-harness notes (not application bugs)
@@ -72,10 +72,13 @@ first one, including attributes appended via `append=`. `Api/AppendsTest`
 therefore asserts only that `append=` adds the attributes, not that they are
 absent without it (this is the same with the file cache in production).
 
-Since upgrade step 1 (Laravel 9.52, PHP 8.1): two tests were **added**
-(`Api/ValidationMessageTest` — the 422 message, `Api/AppendsTest` — `append=`)
-and one line in `Images/FileUploadTest` was changed for Croppa 8 / Flysystem 3
-(`getSrcDisk()->path('')`, UPGRADE_PLAN §11). No other test changed.
+Since upgrade step 1 (Laravel 9.52, PHP 8.1): three tests were **added**
+(`Api/ValidationMessageTest` — the 422 message, `Api/AppendsTest` — `append=`,
+`Api/FilesS3UrlTest` — `/api/files` folders on an `s3` disk with a dummy config,
+no network; the only test that uses the S3 driver) and one line in
+`Images/FileUploadTest` was changed for Croppa 8 / Flysystem 3
+(`getSrcDisk()->path('')`, UPGRADE_PLAN §11). No other test changed. The S3 path
+itself is tested against MinIO with `tools/s3-test/` (not part of the suite).
 
 ## TODO — Stage 2
 
