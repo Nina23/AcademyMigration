@@ -26,7 +26,7 @@ class MixedLoader extends FileLoader
         }
 
         if (is_null($namespace) || $namespace === '*') {
-            return $this->loadPath($this->path, $locale, $group);
+            return $this->loadPaths($this->paths, $locale, $group);
         }
 
         return $this->loadNamespaced($locale, $group, $namespace);
