@@ -2,6 +2,290 @@
 
 All notable changes to `laravel-query-builder` will be documented in this file
 
+## 6.4.3 - 2026-02-21
+
+Add Laravel 13 support
+
+## 6.4.2 - 2026-02-18
+
+- Add generics to QueryBuilder class (#1044)
+
+## 6.4.1 - 2026-01-27
+
+### What's Changed
+
+#### Fixed
+
+- Fix typo in docs by @zigzagdev in https://github.com/spatie/laravel-query-builder/pull/1040
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/6.4.0...6.4.1
+
+## 6.4.0 - 2026-01-09
+
+### What's Changed
+
+* Update README.md to reference v6 documentation pages by @cezar-popa in https://github.com/spatie/laravel-query-builder/pull/1033
+* Compatibility of Laravel 12 scopes with model binding by @lorenzolosa in https://github.com/spatie/laravel-query-builder/pull/1036
+* fix typo in docs by @lorenzolosa in https://github.com/spatie/laravel-query-builder/pull/1035
+* Bump actions/checkout from 5 to 6 by @dependabot[bot] in https://github.com/spatie/laravel-query-builder/pull/1030
+* fix: use instanceof for relation detection by @zigzagdev in https://github.com/spatie/laravel-query-builder/pull/1027
+
+### New Contributors
+
+* @cezar-popa made their first contribution in https://github.com/spatie/laravel-query-builder/pull/1033
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/6.3.6...6.4.0
+
+## 6.3.6 - 2025-10-20
+
+### What's Changed
+
+* Update reference to Laravel Pagination docs by @timmch in https://github.com/spatie/laravel-query-builder/pull/1015
+* Update documentation in the config by @alexkart in https://github.com/spatie/laravel-query-builder/pull/1017
+* Bump actions/checkout from 4 to 5 by @dependabot[bot] in https://github.com/spatie/laravel-query-builder/pull/1016
+* Update issue template by @AlexVanderbist in https://github.com/spatie/laravel-query-builder/pull/1018
+* Test against php 8.5 by @sergiy-petrov in https://github.com/spatie/laravel-query-builder/pull/1020
+* Fix using convert_relation_table_name_strategy of "none" by @wrurik in https://github.com/spatie/laravel-query-builder/pull/1023
+* Bump stefanzweifel/git-auto-commit-action from 6 to 7 by @dependabot[bot] in https://github.com/spatie/laravel-query-builder/pull/1022
+
+### New Contributors
+
+* @timmch made their first contribution in https://github.com/spatie/laravel-query-builder/pull/1015
+* @wrurik made their first contribution in https://github.com/spatie/laravel-query-builder/pull/1023
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/6.3.5...6.3.6
+
+## 6.3.5 - 2025-08-04
+
+### What's Changed
+
+* Make nullable parameter types explicit to avoid deprecation warnings by @zigzagdev in https://github.com/spatie/laravel-query-builder/pull/1013
+
+### New Contributors
+
+* @zigzagdev made their first contribution in https://github.com/spatie/laravel-query-builder/pull/1013
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/6.3.4...6.3.5
+
+## 6.3.4 - 2025-07-25
+
+### What's Changed
+
+* Improve QueryBuilder Generic Support by @liamduckett in https://github.com/spatie/laravel-query-builder/pull/1012
+
+### New Contributors
+
+* @liamduckett made their first contribution in https://github.com/spatie/laravel-query-builder/pull/1012
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/6.3.3...6.3.4
+
+## 6.3.3 - 2025-07-14
+
+### What's Changed
+
+* update some links so point to v6 docs by @KnudH in https://github.com/spatie/laravel-query-builder/pull/1004
+* Bump dependabot/fetch-metadata from 2.3.0 to 2.4.0 by @dependabot[bot] in https://github.com/spatie/laravel-query-builder/pull/1006
+* Docs: clarify selecting fields for included relations by @amyavari in https://github.com/spatie/laravel-query-builder/pull/1008
+* Add larastan and fix static analysis issue by @alexkart in https://github.com/spatie/laravel-query-builder/pull/1003
+* Bump stefanzweifel/git-auto-commit-action from 5 to 6 by @dependabot[bot] in https://github.com/spatie/laravel-query-builder/pull/1009
+* Allow nested filters by @bambamboole in https://github.com/spatie/laravel-query-builder/pull/1010
+
+### New Contributors
+
+* @KnudH made their first contribution in https://github.com/spatie/laravel-query-builder/pull/1004
+* @amyavari made their first contribution in https://github.com/spatie/laravel-query-builder/pull/1008
+* @bambamboole made their first contribution in https://github.com/spatie/laravel-query-builder/pull/1010
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/6.3.2...6.3.3
+
+## 6.3.2 - 2025-04-16
+
+### What's Changed
+
+* Enhance QueryBuilder with generics support for better type inference by @alexkart in https://github.com/spatie/laravel-query-builder/pull/1002
+
+### New Contributors
+
+* @alexkart made their first contribution in https://github.com/spatie/laravel-query-builder/pull/1002
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/6.3.1...6.3.2
+
+## 6.3.1 - 2025-02-21
+
+### What's Changed
+
+* General code health improvements by @xHeaven in https://github.com/spatie/laravel-query-builder/pull/988
+* Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 by @dependabot in https://github.com/spatie/laravel-query-builder/pull/992
+* Laravel 12.x Compatibility by @laravel-shift in https://github.com/spatie/laravel-query-builder/pull/994
+* Exclude `.github` folder and `.php_cs` from being included in composer installation by @stevebauman in https://github.com/spatie/laravel-query-builder/pull/993
+
+### New Contributors
+
+* @xHeaven made their first contribution in https://github.com/spatie/laravel-query-builder/pull/988
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/6.3.0...6.3.1
+
+## 6.3.0 - 2024-12-23
+
+### What's Changed
+
+* Feature: Add "belongs to" filter by @gpibarra in https://github.com/spatie/laravel-query-builder/pull/975
+* Feature: Additional config options to better match the API spec by @CoolGoose in https://github.com/spatie/laravel-query-builder/pull/983
+
+### New Contributors
+
+* @CoolGoose made their first contribution in https://github.com/spatie/laravel-query-builder/pull/983
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/6.2.3...6.3.0
+
+## 6.2.3 - 2024-12-23
+
+### What's Changed
+
+* Fix selecting fields on belongs to many relations by @rasmuscnielsen in https://github.com/spatie/laravel-query-builder/pull/986
+
+### New Contributors
+
+* @rasmuscnielsen made their first contribution in https://github.com/spatie/laravel-query-builder/pull/986
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/6.2.2...6.2.3
+
+## 6.2.2 - 2024-12-11
+
+### What's Changed
+
+* Update filtering.md to clarify handling of array scope parameter by @g-gullstrand in https://github.com/spatie/laravel-query-builder/pull/976
+* Remove PHPUnit cache by @tarexme in https://github.com/spatie/laravel-query-builder/pull/982
+* Fix typo in filtering.md by @yngc0der in https://github.com/spatie/laravel-query-builder/pull/984
+* Fixed IncludedCount.php by @dash8x in https://github.com/spatie/laravel-query-builder/pull/978
+
+### New Contributors
+
+* @g-gullstrand made their first contribution in https://github.com/spatie/laravel-query-builder/pull/976
+* @tarexme made their first contribution in https://github.com/spatie/laravel-query-builder/pull/982
+* @yngc0der made their first contribution in https://github.com/spatie/laravel-query-builder/pull/984
+* @dash8x made their first contribution in https://github.com/spatie/laravel-query-builder/pull/978
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/6.2.1...6.2.2
+
+## 6.2.1 - 2024-10-03
+
+### What's Changed
+
+* Removed explicit escaping for `pgsql` driver in `FiltersPartial` - Fixes #941 by @Talpx1 in https://github.com/spatie/laravel-query-builder/pull/968
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/6.2.0...6.2.1
+
+## 6.2.0 - 2024-09-27
+
+### What's Changed
+
+* [FEAT] add filter by operator by @AbdelrahmanBl in https://github.com/spatie/laravel-query-builder/pull/940
+* Add documentation for the operator filter by @AlexVanderbist in https://github.com/spatie/laravel-query-builder/pull/974
+
+### New Contributors
+
+* @AbdelrahmanBl made their first contribution in https://github.com/spatie/laravel-query-builder/pull/940
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/6.1.0...6.2.0
+
+## 6.1.0 - 2024-09-23
+
+### What's Changed
+
+* Bump ramsey/composer-install from 2 to 3 by @dependabot in https://github.com/spatie/laravel-query-builder/pull/939
+* Add issue #175 link in selecting-fields.md by @alipadron in https://github.com/spatie/laravel-query-builder/pull/951
+* Update filtering.md by @justinkekeocha in https://github.com/spatie/laravel-query-builder/pull/954
+* Bump dependabot/fetch-metadata from 2.1.0 to 2.2.0 by @dependabot in https://github.com/spatie/laravel-query-builder/pull/955
+* [DOCS] Update Frontend implementation with a new one by @cgarciagarcia in https://github.com/spatie/laravel-query-builder/pull/961
+* Update Documentation for php markdown by @chengkangzai in https://github.com/spatie/laravel-query-builder/pull/969
+* AllowedFilter should return static rather than self by @kosarinin in https://github.com/spatie/laravel-query-builder/pull/964
+
+### New Contributors
+
+* @alipadron made their first contribution in https://github.com/spatie/laravel-query-builder/pull/951
+* @cgarciagarcia made their first contribution in https://github.com/spatie/laravel-query-builder/pull/961
+* @chengkangzai made their first contribution in https://github.com/spatie/laravel-query-builder/pull/969
+* @kosarinin made their first contribution in https://github.com/spatie/laravel-query-builder/pull/964
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/6.0.1...6.1.0
+
+## 6.0.1 - 2024-05-21
+
+### What's Changed
+
+* Fix ability to filter models by an array as filter value by @inmula in https://github.com/spatie/laravel-query-builder/pull/943
+
+### New Contributors
+
+* @inmula made their first contribution in https://github.com/spatie/laravel-query-builder/pull/943
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/6.0.0...6.0.1
+
+## 6.0.0 - 2024-05-10
+
+### What's Changed
+
+* Add additional types & Phpstan by @Nielsvanpach in https://github.com/spatie/laravel-query-builder/pull/910
+
+### New Contributors
+
+* @Nielsvanpach made their first contribution in https://github.com/spatie/laravel-query-builder/pull/910
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/5.8.1...6.0.0
+
+## 5.8.1 - 2024-05-10
+
+### What's Changed
+
+* Fix typo by @justinkekeocha in https://github.com/spatie/laravel-query-builder/pull/926
+* List query-builder-ts front-end implementation package by @rogervila in https://github.com/spatie/laravel-query-builder/pull/925
+* Fix incorrect escape character in SQL for LIKE query in partial filter by @Talpx1 in https://github.com/spatie/laravel-query-builder/pull/927
+
+### New Contributors
+
+* @justinkekeocha made their first contribution in https://github.com/spatie/laravel-query-builder/pull/926
+* @rogervila made their first contribution in https://github.com/spatie/laravel-query-builder/pull/925
+* @Talpx1 made their first contribution in https://github.com/spatie/laravel-query-builder/pull/927
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/5.8.0...5.8.1
+
+## 5.8.0 - 2024-02-06
+
+### What's Changed
+
+* [Docs] Update config file content by @shdehnavi in https://github.com/spatie/laravel-query-builder/pull/918
+* Bump: Deprecating Laravel 9 and PHP 8.1, adding Laravel 11 support by @JustSteveKing in https://github.com/spatie/laravel-query-builder/pull/922
+
+### New Contributors
+
+* @shdehnavi made their first contribution in https://github.com/spatie/laravel-query-builder/pull/918
+* @JustSteveKing made their first contribution in https://github.com/spatie/laravel-query-builder/pull/922
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/5.7.0...5.8.0
+
+## 5.7.0 - 2024-01-08
+
+### What's Changed
+
+* Start testing against PHP 8.3 by @sergiy-petrov in https://github.com/spatie/laravel-query-builder/pull/899
+* Add the possibility to use the literal relation names in the `allowedFields`. by @carvemerson in https://github.com/spatie/laravel-query-builder/pull/917
+* Add `unsetDefault` as a replacement for `default(null)` which was removed in 5.6.0 by @patrickrobrecht in https://github.com/spatie/laravel-query-builder/pull/902
+* Allow passing an array to the `defaultSort` function as documented by @MajidMohammadian in https://github.com/spatie/laravel-query-builder/pull/904
+* Add `disable_invalid_includes_query_exception` config option by @dimzeta in https://github.com/spatie/laravel-query-builder/pull/906
+* Update `AllowedFilter.php` to include `getFilterClass` function by @justasSendrauskas in https://github.com/spatie/laravel-query-builder/pull/909
+
+### New Contributors
+
+* @sergiy-petrov made their first contribution in https://github.com/spatie/laravel-query-builder/pull/899
+* @carvemerson made their first contribution in https://github.com/spatie/laravel-query-builder/pull/917
+* @patrickrobrecht made their first contribution in https://github.com/spatie/laravel-query-builder/pull/902
+* @MajidMohammadian made their first contribution in https://github.com/spatie/laravel-query-builder/pull/904
+* @dimzeta made their first contribution in https://github.com/spatie/laravel-query-builder/pull/906
+* @justasSendrauskas made their first contribution in https://github.com/spatie/laravel-query-builder/pull/909
+
+**Full Changelog**: https://github.com/spatie/laravel-query-builder/compare/5.6.0...5.7.0
+
 ## 5.6.0 - 2023-10-05
 
 ### What's Changed
