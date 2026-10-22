@@ -40,7 +40,7 @@ class Classschedule extends Base
         'position'
     ];
 
-    protected $dates = ['from_date', 'to_date', 'expiry'];
+    protected $casts = ['from_date' => 'datetime', 'to_date' => 'datetime', 'expiry' => 'datetime'];
 
 
     protected $guarded = [];

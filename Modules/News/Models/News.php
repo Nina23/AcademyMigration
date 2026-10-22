@@ -22,7 +22,7 @@ class News extends Base
 
     protected $presenter = ModulePresenter::class;
 
-    protected $dates = ['date'];
+    protected $casts = ['date' => 'datetime'];
 
     protected $guarded = [];
 

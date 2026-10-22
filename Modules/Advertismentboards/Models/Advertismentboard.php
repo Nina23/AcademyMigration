@@ -28,7 +28,7 @@ class Advertismentboard extends Base
 
     protected $guarded = [];
 
-     protected $dates = ['date'];
+     protected $casts = ['date' => 'datetime'];
 
     public $translatable = [
         'title',
