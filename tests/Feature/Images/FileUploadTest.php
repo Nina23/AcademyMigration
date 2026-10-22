@@ -40,7 +40,7 @@ class FileUploadTest extends TestCase
         Facade::clearResolvedInstance('Bkwld\Croppa\Helpers');
 
         // Safety: never touch real storage.
-        $croppaRoot = $this->app->make('Bkwld\Croppa\Storage')->getSrcDisk()->getAdapter()->getPathPrefix();
+        $croppaRoot = $this->app->make('Bkwld\Croppa\Storage')->getSrcDisk()->path('');
         $this->assertStringContainsString('storage/framework/testing/disks/public', $croppaRoot);
 
         $this->admin = $this->createSuperUser();

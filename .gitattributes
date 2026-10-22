@@ -5,3 +5,5 @@
 CHANGELOG.md export-ignore
 # Pinned package copies must stay byte-identical to the original packages
 packages/** -text
+# Shell scripts (tools/) must keep LF line endings to run in bash
+*.sh text eol=lf

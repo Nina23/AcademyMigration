@@ -1,0 +1,52 @@
+# Local S3 test stack (UPGRADE_PLAN.md D8 / O1): MinIO + a second app container.
+# Not used by the normal dev setup; see tools/s3-test/README.md.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.s3.yml up -d --build app-s3 minio
+#
+# MinIO only, with its own bucket and dummy credentials (.env.s3test).
+# Never the production bucket, production credentials or the production database.
+services:
+  app-s3:
+    # Same Dockerfile as "app", built separately, with its own vendor volume,
+    # so the dev "app" container, its image and its vendor stay untouched.
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    image: akademija_prod_2026-app-s3
+    depends_on:
+      - mariadb
+    ports:
+      - "8081:80"     # app (APP_URL=http://localhost:8081)
+      - "9000:9000"   # MinIO S3 API (shares this network namespace)
+      - "9001:9001"   # MinIO console
+    extra_hosts:
+      # virtual-host style bucket name (Laravel 8 S3 client), see .env.s3test
+      - "akademija-s3test.localhost:127.0.0.1"
+    volumes:
+      - .:/var/www/html
+      - vendor_s3:/var/www/html/vendor
+      - composer_cache_s3:/root/.composer/cache
+      # Laravel reads .env: in this container it is the S3 test env file.
+      - ./.env.s3test:/var/www/html/.env:ro
+    tmpfs:
+      # Hide the dev uploads of the local "public" disk (public/storage links here):
+      # with S3 nothing is served from it, as in production.
+      - /var/www/html/storage/app/public
+    working_dir: /var/www/html
+
+  minio:
+    # MinIO server built from the open-source code by Chainguard (the official
+    # minio/minio images are no longer published). Pinned by digest.
+    # Version: RELEASE.2026-09-22T19-25-18Z.
+    image: cgr.dev/chainguard/minio@sha256:ad134b2dd572ae0d989d6807c3e45516cc75a34883a8021db2ff04be5d1d496a
+    command: ["server", "/data", "--address", ":9000", "--console-address", ":9001"]
+    # localhost:9000 is MinIO inside app-s3 and on the host (same URLs everywhere).
+    network_mode: "service:app-s3"
+    env_file: .env.s3test
+    volumes:
+      - minio_data:/data
+
+volumes:
+  vendor_s3:
+  composer_cache_s3:
+  minio_data:

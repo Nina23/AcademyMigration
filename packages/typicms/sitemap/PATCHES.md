@@ -6,3 +6,4 @@ Pinned in-repo copy of `typicms/sitemap` **8.0.0** (dist reference `44e51066784a
 |---|---|---|---|
 | 0 | `composer.json` | added `"version": "8.0.0"` | path repository needs a fixed version so the root constraints keep resolving to the installed version |
 | 0 | `composer.json` | widened the Laravel/Illuminate constraint up to `^13.0` | install only; no code change |
+| 1 (L9) | `composer.json` | requires `ultrono/laravel-sitemap ^9.5` instead of `laravelium/sitemap ~8.0` | laravelium/sitemap has no Laravel 9 release; ultrono 9.5 is the maintained fork with identical classes (namespace `Ultrono\Sitemap`), the same `sitemap` binding, views and config. This package only uses `app('sitemap')`, so no code change |
