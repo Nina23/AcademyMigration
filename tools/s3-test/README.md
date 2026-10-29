@@ -78,8 +78,14 @@ docker compose exec mariadb mariadb -uroot -proot -e 'DROP DATABASE akademija_s3
 
 `app-s3` runs `composer install` / `package:discover` in the shared working tree,
 which rewrites `bootstrap/cache/packages.php` and `services.php`. Back on the dev
-setup, run `docker compose exec app php artisan package:discover` (or
-`composer install`) before using `app` again.
+setup, run `docker compose exec -u www-data app php artisan package:discover`
+before using `app` again.
+
+Since step 3 the scripts run artisan (`clear-compiled`, `package:discover`) and
+`run-checks.php` as `www-data`; only `composer install --no-scripts` runs as root
+(it writes the root-owned `vendor_s3` volume). Run as root, artisan leaves
+root-owned files in the shared `storage/` and `bootstrap/cache` that the dev app
+(Apache, `www-data`) cannot write (UPGRADE_PLAN R24).
 
 ## What MinIO cannot reproduce (check on a separate non-production AWS test bucket)
 

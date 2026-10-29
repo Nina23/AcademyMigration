@@ -16,7 +16,9 @@ mkdir -p "$OUT"
 
 net() { echo "container:$($DC ps -q app-s3)"; }
 mc() { docker run --rm --network "$(net)" --env-file .env.s3test "$MC_IMAGE" "$@"; }
-checks() { $DC exec -T app-s3 php tools/s3-test/run-checks.php "$@"; }
+# The checks boot the app: run them as www-data (the Apache user), not root, so the shared
+# storage/ gets no root-owned files (UPGRADE_PLAN R24). They write their results to $OUT.
+checks() { $DC exec -T -u www-data app-s3 php tools/s3-test/run-checks.php "$@"; }
 app_key() { grep -E '^AWS_ACCESS_KEY_ID=' .env.s3test | cut -d= -f2-; }
 
 # Reduce "mc admin trace -v" output to one line per S3 request (no auth headers).
@@ -41,6 +43,8 @@ errors_since() {
 
 echo "== reset bucket and database"
 bash tools/s3-test/setup.sh reset
+# run-checks.php (as www-data) writes its result files into $OUT.
+$DC exec -T app-s3 chown -R www-data:www-data "$OUT"
 
 echo "== main checks (with request trace)"
 docker rm -f s3test-trace >/dev/null 2>&1 || true

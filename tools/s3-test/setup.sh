@@ -53,7 +53,12 @@ cmd_composer() {
   # After a branch switch, vendor symlinks to pinned copies (packages/*) that the
   # branch does not have are dangling; composer cannot replace them.
   $DC exec -T app-s3 find vendor -mindepth 2 -maxdepth 2 -xtype l -exec unlink {} \;
-  $DC exec -T app-s3 composer install --no-interaction --no-progress
+  # composer runs as root (it writes the root-owned vendor_s3 volume), without its scripts:
+  # the post-autoload scripts boot artisan, which must run as www-data (the Apache user),
+  # or it leaves root-owned files in the shared storage/ and bootstrap/cache (UPGRADE_PLAN R24).
+  $DC exec -T app-s3 composer install --no-interaction --no-progress --no-scripts
+  $DC exec -T -u www-data app-s3 php artisan clear-compiled
+  $DC exec -T -u www-data app-s3 php artisan package:discover
 }
 
 cmd_bucket() {
