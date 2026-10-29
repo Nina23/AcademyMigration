@@ -1,5 +1,5 @@
-# Debian release pinned (bookworm) until the production OS is confirmed (STEP1_PLAN D-S1-4, STEP2_PLAN D-S2-7).
-FROM php:8.2-apache-bookworm
+# Debian release pinned (bookworm) until the production OS is confirmed (STEP1_PLAN D-S1-4, STEP2_PLAN D-S2-7, STEP3_PLAN D-S3-1).
+FROM php:8.4-apache-bookworm
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
