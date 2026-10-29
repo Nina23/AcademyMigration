@@ -1,11 +1,19 @@
-# Build Eloquent queries from API requests
+<div align="left">
+    <a href="https://spatie.be/open-source?utm_source=github&utm_medium=banner&utm_campaign=laravel-query-builder">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://spatie.be/packages/header/laravel-query-builder/html/dark.webp">
+        <img alt="Logo for laravel-query-builder" src="https://spatie.be/packages/header/laravel-query-builder/html/light.webp">
+      </picture>
+    </a>
+
+<h1>Build Eloquent queries from API requests</h1>
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-query-builder.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-query-builder)
 ![Test Status](https://img.shields.io/github/actions/workflow/status/spatie/laravel-query-builder/run-tests.yml?label=tests&branch=main)
 ![Code Style Status](https://img.shields.io/github/actions/workflow/status/spatie/laravel-query-builder/php-cs-fixer.yml?label=code%20style&branch=main)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-query-builder.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-query-builder)
-
-This package allows you to filter, sort and include eloquent relations based on a request. The `QueryBuilder` used in this package extends Laravel's default Eloquent builder. This means all your favorite methods and macros are still available. Query parameter names follow the [JSON API specification](http://jsonapi.org/) as closely as possible.
+    
+</div>
 
 ## Basic usage
 
@@ -21,7 +29,7 @@ $users = QueryBuilder::for(User::class)
 // all `User`s that contain the string "John" in their name
 ```
 
-[Read more about filtering features like: partial filters, exact filters, scope filters, custom filters, ignored values, default filter values, ...](https://spatie.be/docs/laravel-query-builder/v5/features/filtering/)
+[Read more about filtering features like: partial filters, exact filters, scope filters, custom filters, ignored values, default filter values, ...](https://spatie.be/docs/laravel-query-builder/v6/features/filtering/)
 
 ### Including relations based on a request: `/users?include=posts`:
 
@@ -33,7 +41,7 @@ $users = QueryBuilder::for(User::class)
 // all `User`s with their `posts` loaded
 ```
 
-[Read more about include features like: including nested relationships, including relationship count, custom includes, ...](https://spatie.be/docs/laravel-query-builder/v5/features/including-relationships/)
+[Read more about include features like: including nested relationships, including relationship count, custom includes, ...](https://spatie.be/docs/laravel-query-builder/v6/features/including-relationships/)
 
 ### Sorting a query based on a request: `/users?sort=id`:
 
@@ -45,7 +53,7 @@ $users = QueryBuilder::for(User::class)
 // all `User`s sorted by ascending id
 ```
 
-[Read more about sorting features like: custom sorts, sort direction, ...](https://spatie.be/docs/laravel-query-builder/v5/features/sorting/)
+[Read more about sorting features like: custom sorts, sort direction, ...](https://spatie.be/docs/laravel-query-builder/v6/features/sorting/)
 
 ### Works together nicely with existing queries:
 
@@ -68,7 +76,7 @@ $users = QueryBuilder::for(User::class)
 // the fetched `User`s will only have their id & email set
 ```
 
-[Read more about selecting fields.](https://spatie.be/docs/laravel-query-builder/v5/features/selecting-fields/)
+[Read more about selecting fields.](https://spatie.be/docs/laravel-query-builder/v6/features/selecting-fields/)
 
 ## Support us
 
@@ -86,11 +94,11 @@ You can install the package via composer:
 composer require spatie/laravel-query-builder
 ```
 
-Read the installation notes on the docs site: [https://spatie.be/docs/laravel-query-builder/v5/installation-setup](https://spatie.be/docs/laravel-query-builder/v5/installation-setup/).
+Read the installation notes on the docs site: [https://spatie.be/docs/laravel-query-builder/v6/installation-setup](https://spatie.be/docs/laravel-query-builder/v6/installation-setup/).
 
 ## Documentation
 
-You can find the documentation on [https://spatie.be/docs/laravel-query-builder/v5](https://spatie.be/docs/laravel-query-builder/v5).
+You can find the documentation on [https://spatie.be/docs/laravel-query-builder/v6](https://spatie.be/docs/laravel-query-builder/v6).
 
 Find yourself stuck using the package? Found a bug? Do you have general questions or suggestions for improving the media library? Feel free to [create an issue on GitHub](https://github.com/spatie/laravel-query-builder/issues), we'll try to address it as soon as possible.
 

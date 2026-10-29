@@ -52,7 +52,7 @@ docker compose exec -e TEST_DB_REBUILD=0 app php vendor/bin/phpunit         # sk
 | Public routes (DB-driven routing, locales, views) | `Feature/PublicRoutesTest.php` | 6 |
 | Authentication | `Feature/Auth` | 5 |
 | Admin access + News admin CRUD | `Feature/Admin` | 7 |
-| Models: News, Classschedules | `Feature/Models` | 8 |
+| Models: News, Classschedules; date columns of the 5 models with dates | `Feature/Models` | 13 |
 | **Translations** (storage, fallback, JSON queries) | `Feature/Translations` | 13 |
 | Images / uploads / Croppa | `Feature/Images` | 7 |
 | API (News, Pages, Classschedules; 422 message, `append=` columns, file manager folders on an S3 disk) | `Feature/Api` | 12 |
@@ -79,6 +79,14 @@ no network; the only test that uses the S3 driver) and one line in
 `Images/FileUploadTest` was changed for Croppa 8 / Flysystem 3
 (`getSrcDisk()->path('')`, UPGRADE_PLAN §11). No other test changed. The S3 path
 itself is tested against MinIO with `tools/s3-test/` (not part of the suite).
+
+Since upgrade step 2 (Laravel 10.50.3, PHP 8.2): one test was **added**,
+`Models/DateCastsTest` (5 tests): for Advertismentboard, Announcement,
+Classschedule, ClassScheduleItems and News, the date attributes are Carbon on
+read, stored as `Y-m-d H:i:s` / `Y-m-d`, serialized by `serializeDate()` and not
+dirty after re-assigning the same value. Written on Laravel 9 with `$dates`
+before the `$casts` change; it fails on Laravel 10 without the casts. No other
+test changed. Suite: 73 tests, 552 assertions.
 
 ## TODO — Stage 2
 

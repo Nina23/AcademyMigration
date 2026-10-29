@@ -33,7 +33,7 @@ class Announcement extends Base
         'location', 'program', 'year', 'highlight', 'announcement_category_id', 'date', 'expiry'
     ];
 
-    protected $dates = ['date', 'expiry'];
+    protected $casts = ['date' => 'datetime', 'expiry' => 'datetime'];
 
     public $translatable = [
         'title',

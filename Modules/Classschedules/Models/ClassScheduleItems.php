@@ -31,7 +31,7 @@ class ClassScheduleItems extends Base
         'position'
     ];
 
-    protected $dates = ['from_date', 'to_date'];
+    protected $casts = ['from_date' => 'datetime', 'to_date' => 'datetime'];
 
 
     protected $guarded = [];
