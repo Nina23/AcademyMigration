@@ -12,10 +12,14 @@ current behaviour — including a few known bugs, clearly marked `known_bug` /
 
 ```bash
 docker compose up -d                                   # app, mariadb (dev), mariadb-test
-docker compose exec app php artisan test               # or: php vendor/bin/phpunit
-docker compose exec app php vendor/bin/phpunit tests/Feature/Translations   # one area
-docker compose exec -e TEST_DB_REBUILD=0 app php vendor/bin/phpunit         # skip the DB rebuild
+docker compose exec -u www-data app php artisan test               # or: php vendor/bin/phpunit
+docker compose exec -u www-data app php vendor/bin/phpunit tests/Feature/Translations   # one area
+docker compose exec -u www-data -e TEST_DB_REBUILD=0 app php vendor/bin/phpunit         # skip the DB rebuild
 ```
+
+Run as `www-data` (the Apache user): the suite compiles Blade views into the
+shared `storage/framework/views`; run as root it leaves root-owned files that the
+dev app cannot rewrite (UPGRADE_PLAN R24).
 
 ## Test database (isolation)
 
@@ -53,7 +57,7 @@ docker compose exec -e TEST_DB_REBUILD=0 app php vendor/bin/phpunit         # sk
 | Authentication | `Feature/Auth` | 5 |
 | Admin access + News admin CRUD | `Feature/Admin` | 7 |
 | Models: News, Classschedules; date columns of the 5 models with dates | `Feature/Models` | 13 |
-| **Translations** (storage, fallback, JSON queries) | `Feature/Translations` | 13 |
+| **Translations** (storage, fallback, JSON queries, `@choice` plural forms) | `Feature/Translations` | 15 |
 | Images / uploads / Croppa | `Feature/Images` | 7 |
 | API (News, Pages, Classschedules; 422 message, `append=` columns, file manager folders on an S3 disk) | `Feature/Api` | 12 |
 | Laravel examples (unchanged) | `Unit`, `Feature/ExampleTest.php` | 2 |
@@ -87,6 +91,18 @@ read, stored as `Y-m-d H:i:s` / `Y-m-d`, serialized by `serializeDate()` and not
 dirty after re-assigning the same value. Written on Laravel 9 with `$dates`
 before the `$casts` change; it fails on Laravel 10 without the casts. No other
 test changed. Suite: 73 tests, 552 assertions.
+
+Since upgrade step 3 (Laravel 11.57.1, PHP 8.4, **PHPUnit 11.5**): one test was
+**added**, `Translations/ChoiceTest` (2 tests): `trans_choice(__('pages'), n)` and
+the search page's `@choice(__($module), $count)` give today's plural forms in sr
+and sr-latn (Laravel 11 would use the English rule; kept by the Translator patch
+in the pinned `typicms/translations`). Two technical changes for PHPUnit 11:
+`phpunit.xml` migrated with `--migrate-configuration` (all `<server>` values
+unchanged) and one line in `tests/bootstrap.php`
+(`HandleExceptions::flushState()` after the DB rebuild, otherwise PHPUnit 11
+reports every test as risky because the bootstrap's app installed Laravel's error
+handlers before the first test). No other test changed. Suite: 75 tests, 592
+assertions.
 
 ## TODO — Stage 2
 
