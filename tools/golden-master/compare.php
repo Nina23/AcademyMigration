@@ -39,9 +39,19 @@ function normalize($body)
     return $body;
 }
 
+// Content-Type: only the charset value is compared case-insensitively (charset names are
+// case-insensitive; Symfony 7 sends "utf-8", Symfony 6 "UTF-8"; STEP3_PLAN D-S3-9).
+function normalizeType($type)
+{
+    return preg_replace_callback('#(;\s*charset=)([^;\s]+)#', function ($m) {
+        return $m[1].strtolower($m[2]);
+    }, $type);
+}
+
 $ia = readIndex("$root/$a");
 $ib = readIndex("$root/$b");
 $counts = ['same' => 0, 'whitespace-only' => 0, 'DIFF' => 0, 'missing' => 0];
+$charsetCaseOnly = 0;
 $lines = [];
 
 foreach ($ia as $path => $ra) {
@@ -54,6 +64,10 @@ foreach ($ia as $path => $ra) {
     $problems = [];
     foreach (['status', 'type', 'location'] as $k) {
         if ($ra[$k] !== $rb[$k]) {
+            if ($k === 'type' && normalizeType($ra[$k]) === normalizeType($rb[$k])) {
+                $charsetCaseOnly++;
+                continue;
+            }
             $problems[] = "$k: {$ra[$k]} -> {$rb[$k]}";
         }
     }
@@ -91,6 +105,7 @@ $summary = '';
 foreach ($counts as $k => $v) {
     $summary .= "$k: $v\n";
 }
+$summary .= "(Content-Type differing only in the charset case, counted as same type: $charsetCaseOnly)\n";
 file_put_contents("$report/report.txt", $summary."\n".implode("\n", $lines)."\n");
 echo $summary;
 echo implode("\n", array_slice($lines, 0, 200)), "\n";
