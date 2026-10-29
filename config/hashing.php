@@ -49,4 +49,17 @@ return [
         'time' => 2,
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Rehash On Login
+    |--------------------------------------------------------------------------
+    |
+    | Laravel 11+ rewrites a user's stored password hash at login when its
+    | algorithm or cost differs from the options above. Kept off so a login
+    | never writes to the users table, as before (UPGRADE_PLAN §2.2).
+    |
+    */
+
+    'rehash_on_login' => false,
+
 ];

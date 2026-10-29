@@ -55,4 +55,7 @@ if (getenv('TEST_DB_REBUILD') !== '0') {
 }
 
 $app->flush();
+// Remove the error/exception handlers this boot installed, so PHPUnit 11 does not
+// report every test as risky when Laravel's per-test teardown restores them.
+\Illuminate\Foundation\Bootstrap\HandleExceptions::flushState();
 unset($app, $kernel);
