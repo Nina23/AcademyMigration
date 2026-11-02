@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laracasts\Presenter\Presenter as BasePresenter;
+use TypiCMS\Modules\Core\Services\Dates;
 
 abstract class Presenter extends BasePresenter
 {
@@ -51,7 +52,7 @@ abstract class Presenter extends BasePresenter
      */
     public function dateLocalized($column = 'date')
     {
-        return $this->entity->{$column}->formatLocalized('%e %B %Y');
+        return Dates::formatLocalized($this->entity->{$column}, '%e %B %Y');
     }
 
     /**
@@ -63,7 +64,7 @@ abstract class Presenter extends BasePresenter
      */
     public function dateTimeLocalized($column = 'datetime')
     {
-        return $this->entity->{$column}->formatLocalized('%e %B %Y %H:%M');
+        return Dates::formatLocalized($this->entity->{$column}, '%e %B %Y %H:%M');
     }
 
     /**
