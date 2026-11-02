@@ -31,7 +31,14 @@ abstract class Base extends Model
         $locale = $locale ?: config('app.locale');
         $route = $locale.'::'.Str::singular($this->getTable());
         if (Route::has($route)) {
-            return route($route, $this->translate('slug', $locale));
+            $slug = $this->translate('slug', $locale);
+            if ($slug === '') {
+                // No slug in this locale: Laravel 8-11 built the URL with an empty {slug}
+                // (= the module page); Laravel 12's route() rejects an empty parameter.
+                return url(str_replace('{slug}', '', Route::getRoutes()->getByName($route)->uri()));
+            }
+
+            return route($route, $slug);
         }
 
         return '/';

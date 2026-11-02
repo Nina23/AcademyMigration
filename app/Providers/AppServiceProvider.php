@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use App\Filesystem\AwsS3V3Adapter;
+use App\Pagination\LengthAwarePaginator;
+use App\Routing\RouteCollection;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,7 +18,23 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        /*
+         * Route names registered more than once resolve to the last registered
+         * route, as on Laravel 8-11 (App\Routing\RouteCollection). Routes that are
+         * already registered at this point are carried over.
+         */
+        $router = $this->app['router'];
+        $routes = new RouteCollection();
+        foreach ($router->getRoutes() as $route) {
+            $routes->add($route);
+        }
+        $router->setRoutes($routes);
+
+        /*
+         * Paginated JSON without the "page" key that Laravel 12 adds to each entry
+         * of "links" (App\Pagination\LengthAwarePaginator).
+         */
+        $this->app->bind(\Illuminate\Pagination\LengthAwarePaginator::class, LengthAwarePaginator::class);
     }
 
     /**
@@ -49,6 +68,15 @@ class AppServiceProvider extends ServiceProvider
             $disk = $app['filesystem']->createS3Driver($config);
 
             return new AwsS3V3Adapter($disk->getDriver(), $disk->getAdapter(), $disk->getConfig(), $disk->getClient());
+        });
+
+        /*
+         * Laravel 12 adds a Blade @context directive. The JSON-LD partials write the
+         * literal schema.org key "@context"; keep it as text, as on Laravel 8-11.
+         * Custom directives take precedence over Blade's built-in ones.
+         */
+        Blade::directive('context', function ($expression) {
+            return '@context'.($expression === null || $expression === '' ? '' : '('.$expression.')');
         });
     }
 }
