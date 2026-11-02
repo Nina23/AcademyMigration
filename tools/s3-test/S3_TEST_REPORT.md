@@ -56,6 +56,8 @@ Step 2 vs step 1, all result files (`storage/app/s3-test/step-1-*` vs `step-2-*`
 
 Step 3 vs step 2 (`step-2-*` vs `step-3-*`): identical except the version lines, log timestamps and the charset case of the two 404 pages (`charset=UTF-8` → `charset=utf-8`, same sizes; difference 6). Step 3 run: `composer install --no-scripts` in `app-s3` (vendor volume), then `artisan clear-compiled` / `package:discover` and `run-checks.php` **as `www-data`** (a copy of `run.sh` with `exec -u www-data` for the checks), so the shared `storage/` and `bootstrap/cache` get no root-owned files (UPGRADE_PLAN R24). The committed scripts still run them as root.
 
+**Step 4 (Laravel 12.70.2, 2026-11-02): no MinIO run — skipped by the owner's decision.** No S3 package or configuration changed in step 4; the only S3 checks for step 4 are `Api/FilesS3UrlTest` and the R22 check of `App\Filesystem\AwsS3V3Adapter` against the Laravel 12 class (UPGRADE_PLAN.md R22). One run is planned on the final version after step 5 (Laravel 13); if it finds a difference, the run is repeated on the `upgrade/step-4` branch to see which step it came from.
+
 ## Differences and their explanation
 
 1. **Step 1 regression, fixed — `/api/files` 500 on S3 (check e).** Folders are `files` rows with `type = 'f'` and `path = NULL` (728 in the production data; 34 in the root folder). `File::$appends` contains `url` = `Storage::url($this->path)`. Laravel 8 (Flysystem 1) returned the base URL (`AWS_URL/`) for `null`. Laravel 9's `Illuminate\Filesystem\AwsS3V3Adapter::url()` passes it to `PathPrefixer::prefixPath(string $path)` → `TypeError`, an `Error` that `File::getUrlAttribute()` does not catch (`catch (Exception $e)`). Every folder listing that contains sub-folders — the admin file manager and the file picker of every module — returned 500. On the local disk the same call only raises a PHP 8.1 deprecation (logged), so the suite and the golden master could not see it.
@@ -77,6 +79,6 @@ No other differences.
 
 ## Effect on the open items (UPGRADE_PLAN.md)
 
-- **O1:** MinIO part done for the pre-upgrade code and steps 1–3; still open for steps 4–5 and for the AWS test bucket. Keep the `aws/aws-sdk-php` 3.337.3 pin until the AWS test bucket run.
+- **O1:** MinIO part done for the pre-upgrade code and steps 1–3; step 4 skipped (owner's decision); still open: one final run after step 5 and the AWS test bucket. Keep the `aws/aws-sdk-php` 3.337.3 pin until the AWS test bucket run.
 - **O4:** confirmed on MinIO (presigned URL, 300 s, refused after expiry) on all four runs; re-checked with O1 in each step.
 - **O2 (production checks)** and **O3** stay open; O2(c) in particular (redirect target 404 locally on every branch).

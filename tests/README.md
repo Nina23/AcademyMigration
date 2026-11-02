@@ -52,14 +52,16 @@ dev app cannot rewrite (UPGRADE_PLAN R24).
 | Area | Files | Tests |
 |---|---|---|
 | Infrastructure | `Feature/Infrastructure` | 3 |
-| Boot / container / routes | `Feature/Boot` | 5 |
+| Boot / container / routes (incl. duplicated route names) | `Feature/Boot` | 6 |
 | Public routes (DB-driven routing, locales, views) | `Feature/PublicRoutesTest.php` | 6 |
 | Authentication | `Feature/Auth` | 5 |
 | Admin access + News admin CRUD | `Feature/Admin` | 7 |
-| Models: News, Classschedules; date columns of the 5 models with dates | `Feature/Models` | 13 |
+| Models: News, Classschedules; date columns of the 5 models with dates; `uri()` for a locale without slug | `Feature/Models` | 15 |
 | **Translations** (storage, fallback, JSON queries, `@choice` plural forms) | `Feature/Translations` | 15 |
 | Images / uploads / Croppa | `Feature/Images` | 7 |
-| API (News, Pages, Classschedules; 422 message, `append=` columns, file manager folders on an S3 disk) | `Feature/Api` | 12 |
+| Core presenter localized dates, `Dates::concat()` | `Feature/Presenters` | 2 |
+| Blade views: JSON-LD `"@context"` | `Feature/Views` | 2 |
+| API (News, Pages, Classschedules; 422 message, `append=` columns, file manager folders on an S3 disk, pagination `links`) | `Feature/Api` | 13 |
 | Laravel examples (unchanged) | `Unit`, `Feature/ExampleTest.php` | 2 |
 
 ## Test-harness notes (not application bugs)
@@ -103,6 +105,17 @@ unchanged) and one line in `tests/bootstrap.php`
 reports every test as risky because the bootstrap's app installed Laravel's error
 handlers before the first test). No other test changed. Suite: 75 tests, 592
 assertions.
+
+Since upgrade step 4 (Laravel 12.70.2, Carbon 3, PHP 8.4): five tests were
+**added** (8 tests), each pinning a Laravel 11 behaviour that Laravel 12 /
+Carbon 3 changes; all green on Laravel 11 and each failing on Laravel 12 without
+its compat: `Presenters/LocalizedDatesTest` (core `Presenter` / `Dates::concat()`
+dates as Carbon 2's `formatLocalized()` renders them), `Views/JsonLdContextTest`
+(`"@context"` in the JSON-LD partials stays text), `Models/UriEmptySlugTest`
+(`uri()` for a locale without slug = that locale's module page; the language
+switcher link), `Boot/RouteNameTest` (duplicated route names resolve to the last
+registered route) and `Api/PaginationLinksTest` (`links` entries: `url`, `label`,
+`active`). No other test changed. Suite: 83 tests, 622 assertions.
 
 ## TODO — Stage 2
 

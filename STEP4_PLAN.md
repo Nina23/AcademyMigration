@@ -183,7 +183,7 @@ Status codes with all fixes: identical (414 / 14 / 1). Log: only the known `/api
 | **4d** | `app/Pagination/LengthAwarePaginator.php` + binding | **yes** (L11 has no `page` key, nothing removed): suite + golden master |
 | **4e** | pinned core `Dates::formatLocalized()` + `Presenter` / `Dates::concat()` use it; `PATCHES.md` | **yes** (L11: same algorithm as Carbon 2, identical output): suite + golden master |
 | **4f** | composer.json + composer.lock (§3.1 list, `symfony/clock` 7.4, no `-W`) | **yes**: full suite (all 5 new tests), golden master `after-step-4f` vs `before-step-4`, routes / config dump, CORS, class load |
-| — | **MinIO run `tools/s3-test/run.sh step-4`** (announced first; resets **only `akademija_s3test`**, never `akademija`; artisan and checks as `www-data`); results into the report | — |
+| — | ~~MinIO run `tools/s3-test/run.sh step-4`~~ **skipped by the owner's decision** (§9); one final run after step 5 | — |
 | 4g | documentation: UPGRADE_PLAN.md (§1, §3.4, §8, §9 R25–R28, O1/O3/O6, new §17), tests/README.md, `tools/s3-test/S3_TEST_REPORT.md` (step 4 column), STEP4_PLAN.md | — |
 
 Test-first check for each of 4a–4e: the corresponding 4t test must **fail** on L12 with that commit reverted in the working tree (checked after 4f, not committed).
@@ -228,5 +228,14 @@ Test-first check for each of 4a–4e: the corresponding 4t test must **fail** on
 | **D-S4-10** | commit order §5 (4t, then 4a–4e each green on L11, then 4f) | **yes** |
 
 No item needs a change to `Modules/`, the views, Vue / frontend, `package.json`, a test assertion of an existing test, or the database.
+
+## 9. Implementation notes (owner's decisions during step 4, 2026-11-02)
+
+- **Golden master procedure for step 4 only** (the CLAUDE.md rule is unchanged): captured after 4t, 4a, 4b, 4c and 4d; **not** after 4e (only the full suite); **once** after 4f against a same-day baseline (`before-step-4f`, L11 + 4a–4e, after a warm-up). If 4f had shown a difference, the separate commits would have been used to locate it.
+- **Same-day baselines:** `before-step-4` (2026-10-29) vs `after-step-4a` showed 4 noticeboard counter differences, confirmed by a read-only query as a date effect (3 announcements expired between the captures: ids 503, 471 on 2026-10-31, 398 on 2026-11-01). The baseline was re-captured the same day from the 4t code (`before-step-4-r2`); 4a–4d were compared against it (each 429 / 429).
+- **Gap check for 4d / 4e:** `before-step-4f` already contains 4d and 4e, so `after-step-4c` (13:38) was compared with `before-step-4f` (14:07, same day): **429 / 429 identical**. Together with `before-step-4f` vs `after-step-4f` (429 / 429), every commit from 4a to 4f is covered.
+- **Warm-up after `view:clear`:** one capture right after `view:clear` (4b, no warm-up) had the logo missing once on `/sr/login`; the re-capture was identical. Recorded as UPGRADE_PLAN O9 (to check after step 5, before deploying).
+- **MinIO skipped in step 4** (§5): the only S3 checks are `Api/FilesS3UrlTest` and the R22 check (§3.8). One final MinIO run after step 5 on the final version; if it finds a difference, repeat it on `upgrade/step-4` to see which step it came from.
+- **D-S4-8** recorded in UPGRADE_PLAN.md §10 as a known behaviour change; the `app/` subclasses (`RouteCollection`, `LengthAwarePaginator`) added to the risk register (R29) to be checked against the Laravel 13 classes in step 5.
 
 Housekeeping: the trial container `s3trial` (Laravel 12 with all trial-only patches: `@context`, `Base::uri()`, `RouteCollection`, paginator, `formatLocalized`; `no-api`; deprecation log channel; Apache on 8080) and image `akademija-step3-trial:php84` are kept for the implementation; remove with `docker rm -f s3trial && docker rmi akademija-step3-trial:php84`. Trial captures `trial-step-4`, `trial-step-4b`, `trial-step-4c` and their compare folders are in the git-ignored `storage/golden-master/`.

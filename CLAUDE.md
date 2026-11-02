@@ -20,4 +20,5 @@
 
 ## Checks
 - Plan per step: `STEP<n>_PLAN.md`; overall plan: `UPGRADE_PLAN.md`.
-- After every change, the test suite (`docker compose exec app php vendor/bin/phpunit`, see `tests/README.md`) and the golden master (`tools/golden-master/`) must stay green and identical to the previous step.
+- After every change, the test suite (`docker compose exec -u www-data app php vendor/bin/phpunit`, see `tests/README.md`) and the golden master (`tools/golden-master/`) must stay green and identical to the previous step.
+- Run artisan and PHPUnit as `www-data`: run as root they create root-owned files in `storage/` that the web server cannot write (UPGRADE_PLAN R24).

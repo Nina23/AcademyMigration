@@ -57,5 +57,5 @@ The report lists each URL as `same`, `whitespace-only`, or `DIFF`, and writes a
 unified diff per changed URL to `storage/golden-master/compare-<A>-vs-<B>/`.
 
 Content that depends on the current date (e.g. announcements filtered by expiry)
-can change between captures taken on different days. Re-capture the reference on
-the same day when in doubt.
+can change between captures taken on different days. If a capture runs on a
+different day from its baseline, take a same-day baseline first.
