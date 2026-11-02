@@ -8523,11 +8523,11 @@
             "dist": {
                 "type": "path",
                 "url": "packages/typicms/sitemap",
-                "reference": "ebc09d79daf29cc870c5a6447b86aa540f5727c9"
+                "reference": "b72902b00c03e981bc594985e89c988f0051ab61"
             },
             "require": {
                 "laravel/framework": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
-                "ultrono/laravel-sitemap": "^9.5"
+                "ultrono/laravel-sitemap": "^9.5|^10.0"
             },
             "type": "library",
             "autoload": {
