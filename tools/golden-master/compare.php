@@ -28,9 +28,13 @@ function readIndex($dir)
 
 function normalize($body)
 {
-    // Debugbar: head assets (injected right before </head>) and the body script (right before </body>).
+    // Only Debugbar's own markup is removed (STEP5_PLAN D-S5-3); nothing else is normalized.
+    // Debugbar 3: head assets (injected right before </head>) and the body script
+    // (right before </body>), including the one line break Debugbar 3 adds after it.
     $body = preg_replace("#<link rel='stylesheet' type='text/css' property='stylesheet' href='[^']*/_debugbar/.*?(?=</head>)#s", '', $body);
-    $body = preg_replace('#<script type="text/javascript">\s*var phpdebugbar = .*?</script>(?=\s*</body>)#s', '', $body);
+    $body = preg_replace('#<script type="text/javascript">\s*var phpdebugbar = .*?</script>\n?(?=\s*</body>)#s', '', $body);
+    // Debugbar 4 (Laravel 13): one widget block, injected right before </body>.
+    $body = preg_replace('#<!-- Laravel Debugbar Widget -->.*?(?=</body>)#s', '', $body);
     // CSRF tokens.
     $body = preg_replace('#(name="_token" value=")[^"]*"#', '$1__CSRF__"', $body);
     $body = preg_replace('#(<meta name="csrf-token" content=")[^"]*"#', '$1__CSRF__"', $body);
