@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Filesystem\AwsS3V3Adapter;
+use App\Pagination\LengthAwarePaginator;
 use App\Routing\RouteCollection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Storage;
@@ -28,6 +29,12 @@ class AppServiceProvider extends ServiceProvider
             $routes->add($route);
         }
         $router->setRoutes($routes);
+
+        /*
+         * Paginated JSON without the "page" key that Laravel 12 adds to each entry
+         * of "links" (App\Pagination\LengthAwarePaginator).
+         */
+        $this->app->bind(\Illuminate\Pagination\LengthAwarePaginator::class, LengthAwarePaginator::class);
     }
 
     /**
