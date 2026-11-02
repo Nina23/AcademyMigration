@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Filesystem\AwsS3V3Adapter;
+use App\Routing\RouteCollection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
@@ -16,7 +17,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        /*
+         * Route names registered more than once resolve to the last registered
+         * route, as on Laravel 8-11 (App\Routing\RouteCollection). Routes that are
+         * already registered at this point are carried over.
+         */
+        $router = $this->app['router'];
+        $routes = new RouteCollection();
+        foreach ($router->getRoutes() as $route) {
+            $routes->add($route);
+        }
+        $router->setRoutes($routes);
     }
 
     /**
