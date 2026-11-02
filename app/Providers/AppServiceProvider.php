@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Filesystem\AwsS3V3Adapter;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 
@@ -49,6 +50,15 @@ class AppServiceProvider extends ServiceProvider
             $disk = $app['filesystem']->createS3Driver($config);
 
             return new AwsS3V3Adapter($disk->getDriver(), $disk->getAdapter(), $disk->getConfig(), $disk->getClient());
+        });
+
+        /*
+         * Laravel 12 adds a Blade @context directive. The JSON-LD partials write the
+         * literal schema.org key "@context"; keep it as text, as on Laravel 8-11.
+         * Custom directives take precedence over Blade's built-in ones.
+         */
+        Blade::directive('context', function ($expression) {
+            return '@context'.($expression === null || $expression === '' ? '' : '('.$expression.')');
         });
     }
 }
