@@ -1,7 +1,7 @@
 # STEP 5 PLAN — Laravel 12.70 → 13.x (final), PHP stays 8.4
 
-**Analysis only (2026-11-02). No code, config, test or database file was changed.**
-Branch `upgrade/step-5` created from `development` (`8aa13e6`, = `origin/development`, step 4 merged). Not committed, not pushed.
+**Analysis (2026-11-02); implemented 2026-11-02 / 03 (5a–5d), see §9 and UPGRADE_PLAN.md §18.** The analysis below is kept as written; corrections are in §9.
+Branch `upgrade/step-5` created from `development` (`8aa13e6`, = `origin/development`, step 4 merged). Not pushed.
 
 Checked against real code in the **throwaway trial** container `s3trial` (PHP 8.4.27 image, code = `git archive HEAD`, own vendor; the working tree, the `vendor` volume and the dev containers were not touched; artisan / PHPUnit there as `www-data`):
 - a **trial resolution and install of Laravel 13.39.0** (explicit package list, no `-W`, Symfony not listed) and on it: the full suite, the **full golden master (429 URLs) served by the trial** vs `before-step-5`, the booted-app **dump-and-diff L12 vs L13** (config, all routes with middleware, HTTP middleware / groups / priority / aliases, events, providers), `route()` of every duplicated route name, `uri()` of **4,488 model × locale combinations**, the list of **Blade directives new in L13** vs all views, a **class load** of all 394 classes, a **method-collision check** (108 methods new in L13), the Excel export harness, the runtime deprecation log;
@@ -173,3 +173,18 @@ There is no 5t: no L13 behaviour needed a new pin — every changed area is alre
 No item needs a change to `Modules/`, the views, Vue / frontend, `package.json`, a test, or the database.
 
 Housekeeping: the trial container `s3trial` (L13.39.0 with the trial-only `no-api`, deprecation log channel, `DEBUGBAR_ENABLED=false`, Apache on 8080) is kept for the implementation; remove with `docker rm -f s3trial && docker rmi akademija-step3-trial:php84`. Trial captures `trial-step-5`, `trial-step-5b` and their compare folders are in the git-ignored `storage/golden-master/`; the prototype `compare.php` is only in the scratchpad.
+
+## 9. Implementation notes (2026-11-02 / 03)
+
+Commits as in §5: `b044a03` 5a, `bf1ffab` 5b, `900e918` 5c, then 5d (docs). Full record: UPGRADE_PLAN.md §18.
+
+- **5a / 5b / 5c as planned.** 5c lock = the trial lock (164 packages). Suite 83 / 622 OK after each commit; golden master 429 / 429 after 5a, 5b and 5c (same-day baselines, warm-up first). The stale discovery cache (§3.1 procedure note) happened in 5c too: deleted, then `package:discover` as `www-data`.
+- **D-S5-3 condition fulfilled:** the unfiltered comparison with Debugbar off on both sides is 429 / 429 with `compare.php`; raw bytes: 156 identical, 272 only CSRF token values, 1 only the debug stack trace of the known `/api/news/1019/files` 500 (UPGRADE_PLAN §18.1).
+- **§6 final checks:**
+  - **MinIO:** identical to step 3, trace identical. The 12,110-byte larger 404 pages are explained by the S3 test env's `array` cache with genealabs 11 (incomplete menus), not by the upgrade; production uses `file` → no change (O1, S3 report difference 7). No repeat on `upgrade/step-4`.
+  - **O9:** **stays open.** On dev the cold rounds reproduced a *different* symptom from the step 4b logo incident: 500 `File does not exist` on 3 other pages at parallelism 12, caused by the Windows bind mount (confirmed with a control on the container filesystem). The logo incident (200 without the logo) was not reproduced and stays unexplained. Both are to be checked on the Linux test server (UPGRADE_PLAN O9).
+  - **§8 read-only checks:** admin pages L11 vs L13 identical (apart from the render setup), password-reset forms identical, Excel exports unchanged. Found **`/admin/sections` 500 on both versions** → UPGRADE_PLAN O10, to be fixed in this phase after 5d, in its own commit, after the owner approves the cause and the fix. The saving / sending checks are the owner's, on the test server (UPGRADE_PLAN §18.4).
+- **Corrections to this plan:**
+  - §6 described the O9 cause as `BladeCompiler::compile()` writing non-atomically. That was read from the host's stale `vendor/` (Laravel 8.30). Laravel 13 writes compiled views atomically (`Filesystem::replace()`). Framework code must be read in the container, which has its own `vendor` volume.
+  - §8 D-S5-8: the admin render opened `/admin/cache/clear` (a GET route that flushes the cache) and `/admin/dashboard` (outbound GET, log line). The dev DB was checked read-only and is unchanged. Both routes and `admin/_locale/{locale}` are now in the render's skip list (UPGRADE_PLAN §18.3).
+- **Housekeeping:** `s3trial` was removed on 2026-11-03. The image `akademija-step3-trial:php84` is kept until the owner decides. The S3 containers are stopped.

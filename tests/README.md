@@ -117,6 +117,14 @@ switcher link), `Boot/RouteNameTest` (duplicated route names resolve to the last
 registered route) and `Api/PaginationLinksTest` (`links` entries: `url`, `label`,
 `active`). No other test changed. Suite: 83 tests, 622 assertions.
 
+Since upgrade step 5 (Laravel 13.39.0, PHP 8.4, the final version): **no test
+added or changed** — every Laravel 13 area that matters here is already pinned by
+the step 1–4 tests (`ChoiceTest`, `UriEmptySlugTest`, `RouteNameTest`,
+`PaginationLinksTest`, `JsonLdContextTest`, `LocalizedDatesTest`, `DateCastsTest`,
+`AppendsTest`, `FilesS3UrlTest`, …), all green on Laravel 13. genealabs 13.2.1
+changes every model-cache key; the suite runs with caching active (array store)
+and covers the invalidation on save / delete. Suite: 83 tests, 622 assertions.
+
 ## TODO — Stage 2
 
 | Priority | Task | Suite follow-up |
