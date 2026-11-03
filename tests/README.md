@@ -55,7 +55,7 @@ dev app cannot rewrite (UPGRADE_PLAN R24).
 | Boot / container / routes (incl. duplicated route names) | `Feature/Boot` | 6 |
 | Public routes (DB-driven routing, locales, views) | `Feature/PublicRoutesTest.php` | 6 |
 | Authentication | `Feature/Auth` | 5 |
-| Admin access + News admin CRUD | `Feature/Admin` | 7 |
+| Admin access + News admin CRUD + page-section routes | `Feature/Admin` | 11 |
 | Models: News, Classschedules; date columns of the 5 models with dates; `uri()` for a locale without slug | `Feature/Models` | 15 |
 | **Translations** (storage, fallback, JSON queries, `@choice` plural forms) | `Feature/Translations` | 15 |
 | Images / uploads / Croppa | `Feature/Images` | 7 |
@@ -116,6 +116,21 @@ dates as Carbon 2's `formatLocalized()` renders them), `Views/JsonLdContextTest`
 switcher link), `Boot/RouteNameTest` (duplicated route names resolve to the last
 registered route) and `Api/PaginationLinksTest` (`links` entries: `url`, `label`,
 `active`). No other test changed. Suite: 83 tests, 622 assertions.
+
+Since upgrade step 5 (Laravel 13.39.0, PHP 8.4, the final version): **no test
+added or changed** — every Laravel 13 area that matters here is already pinned by
+the step 1–4 tests (`ChoiceTest`, `UriEmptySlugTest`, `RouteNameTest`,
+`PaginationLinksTest`, `JsonLdContextTest`, `LocalizedDatesTest`, `DateCastsTest`,
+`AppendsTest`, `FilesS3UrlTest`, …), all green on Laravel 13. genealabs 13.2.1
+changes every model-cache key; the suite runs with caching active (array store)
+and covers the invalidation on save / delete. Suite: 83 tests, 622 assertions.
+
+After step 5, bug fix O10 (UPGRADE_PLAN.md): one test was **added**,
+`Admin/PageSectionRoutesTest` (4 tests): every route of `SectionsAdminController`
+has its controller method; `/admin/sections` answers 404 for a superuser
+(was 500) and for a guest (was the redirect to the login page); the section
+routes the page form uses stay registered. Written before the fix and failing
+without it (3 of 4). No other test changed. Suite: 87 tests, 632 assertions.
 
 ## TODO — Stage 2
 

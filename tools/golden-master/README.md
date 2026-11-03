@@ -47,8 +47,10 @@ php tools/golden-master/compare.php before-step-0 after-step-0
 ```
 
 Before comparing, bodies are normalized:
-- the debugbar head and body injections are removed (they differ per request
-  and the debugbar package itself is upgraded);
+- the debugbar injections are removed (they differ per request and the
+  debugbar package itself is upgraded): Debugbar 3's head assets and body
+  script, and Debugbar 4's widget block before `</body>`. Only Debugbar's own
+  markup is removed, nothing else;
 - CSRF token values are masked;
 - for `5xx` responses only the status is compared (the error page renderer
   changes with the upgrade: facade/ignition → spatie/laravel-ignition).
