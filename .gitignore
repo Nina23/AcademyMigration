@@ -4,6 +4,8 @@
 !.env.example
 # S3 test template (placeholders only); .env.s3test itself stays ignored
 !.env.s3test.example
+# Test-server template (placeholders only); .env.test-server itself stays ignored
+!.env.test-server.example
 # Test environment: test-only APP_KEY and local Docker test DB credentials (no real secrets).
 !.env.testing
 

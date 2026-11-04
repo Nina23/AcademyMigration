@@ -1,0 +1,62 @@
+# Test server (Ubuntu 24.04, shared with another application that must not be touched).
+# Not used by the dev setup (docker-compose.yml is unchanged). Full procedure: docker/test-server/README.md.
+#
+# Always run with the project name, this file and the env file, e.g.:
+#   docker compose --project-name akademija-test --file docker-compose.test-server.yml \
+#     --env-file .env.test-server <command>
+#
+# - Only the app publishes a port, and only on 127.0.0.1:8080 (Docker bypasses ufw, so nothing
+#   listens on a public interface). Access through an SSH tunnel: APP_URL=http://localhost:8080.
+# - The database publishes no port; it is reachable only on this project's own network.
+# - Own network and volumes (named akademija-test_*); no host bind mounts.
+name: akademija-test
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/test-server/Dockerfile
+    image: akademija-test/app:${APP_IMAGE_TAG:?APP_IMAGE_TAG must be set in the env file}
+    env_file: .env.test-server
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - storage:/var/www/html/storage
+    networks:
+      - internal
+    depends_on:
+      db:
+        condition: service_healthy
+    mem_limit: 1g
+    memswap_limit: 1g
+    restart: unless-stopped
+
+  # MariaDB 10.11.19, the production version. One database only: the one named in DB_DATABASE.
+  db:
+    image: mariadb:10.11.19
+    environment:
+      MARIADB_DATABASE: ${DB_DATABASE:?DB_DATABASE must be set in the env file}
+      MARIADB_USER: ${DB_USERNAME:?DB_USERNAME must be set in the env file}
+      MARIADB_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD must be set in the env file}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?DB_ROOT_PASSWORD must be set in the env file}
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_general_ci"]
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    mem_limit: 1g
+    memswap_limit: 1g
+    restart: unless-stopped
+
+networks:
+  internal:
+
+volumes:
+  storage:
+  db_data:
