@@ -1,0 +1,53 @@
+# Test server only: the reverse proxy in front of the app (docker-compose.test-server.yml, service
+# "proxy"). Plain HTTP on port 8080, HTTP Basic Auth in front of the whole site, noindex.
+# The Basic Auth user and bcrypt hash come from the server's .env.test-server (never from git).
+#
+# One exception (owner's decision 2026-11-04, option A): requests to /api/* that carry their own
+# "Authorization: Bearer ..." header skip Basic Auth. The admin's Vue code sends the user's api_token
+# that way, and a request can carry only one Authorization header, so Basic Auth would refuse every
+# admin list, the file manager and uploads. The app itself checks the token on those routes
+# (auth:api; the only /api route without it is GET /api/tags-list, the tag names).
+{
+	auto_https off
+	admin off
+}
+
+:8080 {
+	header X-Robots-Tag "noindex, nofollow, noarchive"
+
+	# All three must hold. "path" is matched on the cleaned path (so /api/../admin is /admin and does
+	# not match) but ignores case; "path_regexp" adds the case-sensitive check (so /API/... does not
+	# match either, found in the local rehearsal).
+	@api_with_bearer {
+		path /api/*
+		path_regexp ^/api/
+		header Authorization "Bearer *"
+	}
+
+	# The admin's axios sends its Bearer header on every request, and one of them is not under /api:
+	# the content-language switch GET /admin/_locale/<locale> (session only: without a logged-in
+	# admin session the app redirects to the login page, which is behind Basic Auth).
+	@admin_locale_with_bearer {
+		method GET
+		path /admin/_locale/*
+		path_regexp ^/admin/_locale/[a-z-]+$
+		header Authorization "Bearer *"
+	}
+
+	handle @api_with_bearer {
+		reverse_proxy app:80
+	}
+
+	handle @admin_locale_with_bearer {
+		reverse_proxy app:80
+	}
+
+	handle {
+		basic_auth {
+			{$BASIC_AUTH_USER} {$BASIC_AUTH_HASH}
+		}
+		# Caddy passes the original Host header (SERVER_IP:8080) to the app unchanged, so the app
+		# builds its URLs and redirects for that address without trusting X-Forwarded-* headers.
+		reverse_proxy app:80
+	}
+}

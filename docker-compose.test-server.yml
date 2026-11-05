@@ -1,25 +1,44 @@
 # Test server (Ubuntu 24.04, shared with another application that must not be touched).
 # Not used by the dev setup (docker-compose.yml is unchanged). Full procedure: docker/test-server/README.md.
 #
-# Always run with the project name, this file and the env file, e.g.:
+# Always run with the project name, this file and the env file (the README defines `dc` for this):
 #   docker compose --project-name akademija-test --file docker-compose.test-server.yml \
 #     --env-file .env.test-server <command>
 #
-# - Only the app publishes a port, and only on 127.0.0.1:8080 (Docker bypasses ufw, so nothing
-#   listens on a public interface). Access through an SSH tunnel: APP_URL=http://localhost:8080.
-# - The database publishes no port; it is reachable only on this project's own network.
+# - Only the proxy publishes a port: 8080 on all interfaces (http://SERVER_IP:8080), with HTTP Basic
+#   Auth in front of the whole site. Docker publishes ports past ufw.
+# - The app and the database publish no port; they are reachable only on this project's network.
 # - Own network and volumes (named akademija-test_*); no host bind mounts.
 name: akademija-test
 
 services:
+  proxy:
+    image: caddy:2.8.4-alpine
+    environment:
+      BASIC_AUTH_USER: ${BASIC_AUTH_USER:?BASIC_AUTH_USER must be set in the env file}
+      BASIC_AUTH_HASH: ${BASIC_AUTH_HASH:?BASIC_AUTH_HASH must be set in the env file}
+    ports:
+      # PROXY_BIND (optional, in .env.test-server): unset = "8080" (all interfaces, the test server);
+      # "127.0.0.1:8080" later behind fpl-live's Caddy (subdomain); a local rehearsal uses another
+      # 127.0.0.1 port.
+      - "${PROXY_BIND:-8080}:8080"
+    configs:
+      - source: caddyfile
+        target: /etc/caddy/Caddyfile
+    networks:
+      - internal
+    depends_on:
+      - app
+    mem_limit: 128m
+    memswap_limit: 128m
+    restart: unless-stopped
+
   app:
     build:
       context: .
       dockerfile: docker/test-server/Dockerfile
     image: akademija-test/app:${APP_IMAGE_TAG:?APP_IMAGE_TAG must be set in the env file}
     env_file: .env.test-server
-    ports:
-      - "127.0.0.1:8080:80"
     volumes:
       - storage:/var/www/html/storage
     networks:
@@ -54,9 +73,14 @@ services:
     memswap_limit: 1g
     restart: unless-stopped
 
+configs:
+  caddyfile:
+    file: ./docker/test-server/Caddyfile
+
 networks:
   internal:
 
 volumes:
+  # app storage/: sessions, caches, compiled views, logs, and the uploaded files (local "public" disk)
   storage:
   db_data:

@@ -65,5 +65,9 @@ RUN rm -f bootstrap/cache/packages.php bootstrap/cache/services.php \
     && test -f public/js/admin.js && test -f public/js/public.js \
     && test -f public/css/admin.css && test -f public/css/public.css
 
+# public/storage -> storage/app/public, as in dev: with the local "public" disk (test server, for now)
+# the uploaded files and Croppa crops are served from there (php artisan storage:link).
+RUN php artisan storage:link
+
 # Owned by the Apache user: artisan runs as www-data too (UPGRADE_PLAN R24).
 RUN chown -R www-data:www-data storage bootstrap/cache
