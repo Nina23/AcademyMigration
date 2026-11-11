@@ -19,7 +19,8 @@ DIR=${AKADEMIJA_TEST_DIR:-/opt/akademija-test}
 cd "$DIR" || exit 1
 ENVF="$DIR/.env.test-server"
 [ -f "$ENVF" ] || { echo "Missing $ENVF"; exit 1; }
-DBNAME=$(grep -E '^DB_DATABASE=' "$ENVF" | tail -1 | cut -d= -f2- | tr -d "'\"")
+# tr also drops a carriage return: an env file saved with CRLF line endings must not give "akademija_test\r"
+DBNAME=$(grep -E '^DB_DATABASE=' "$ENVF" | tail -1 | cut -d= -f2- | tr -d "'\"\r")
 [ -n "$DBNAME" ] || { echo "DB_DATABASE is not set in $ENVF"; exit 1; }
 
 OUT="/root/akademija-test-credentials-$(date +%Y-%m-%d-%H%M%S).tsv"

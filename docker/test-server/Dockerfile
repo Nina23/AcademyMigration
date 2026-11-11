@@ -50,6 +50,20 @@ RUN git config --global url."https://github.com/".insteadOf "git@github.com:" \
 # Application code (see Dockerfile.dockerignore for what is left out).
 COPY . .
 
+# Line endings: the code must be the committed bytes (LF), as on production. A "git archive" on Windows
+# with core.autocrlf=true writes CRLF into every text file (README section 2 disables that); stop if
+# that happened. These files are committed with LF (public/css/admin.css is committed with CRLF, so it
+# is not in the list).
+RUN for f in artisan public/index.php public/.htaccess config/app.php routes/web.php \
+        public/js/admin.js public/js/public.js public/css/public.css \
+        resources/views/vendor/core/public/master.blade.php tools/test-server/prepare-test-copy.php \
+        tools/test-server/prepare-test-copy.sh docker/test-server/Caddyfile; do \
+      test -f "$f" || { echo "missing: $f"; exit 1; }; \
+      if grep -q "$(printf '\r')" "$f"; then \
+        echo "CRLF line endings in $f: rebuild from an LF archive (README section 2)"; exit 1; \
+      fi; \
+    done
+
 # Runtime directories (storage is a named volume; Docker copies this layout into it when the volume
 # is created). They must exist before artisan runs (the view compiler needs its cache path).
 RUN mkdir -p storage/app/public storage/framework/cache/data storage/framework/sessions \

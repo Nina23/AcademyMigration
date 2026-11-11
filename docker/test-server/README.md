@@ -54,7 +54,8 @@ Who: you, on the machine with Docker and the repository (nothing here connects t
 git fetch origin && git checkout deploy/test-server && git status   # "nothing to commit": must be clean
 SHA=$(git rev-parse --short HEAD)                                   # the version name, e.g. de3af64
 mkdir -p /tmp/akademija-test-$SHA
-git archive --format=tar HEAD | tar -x -C /tmp/akademija-test-$SHA   # exactly the committed files
+git -c core.autocrlf=false -c core.eol=lf archive --format=tar HEAD \
+  | tar -x -C /tmp/akademija-test-$SHA                              # exactly the committed bytes (LF)
 docker build --platform linux/amd64 \
   -f /tmp/akademija-test-$SHA/docker/test-server/Dockerfile \
   -t akademija-test/app:$SHA /tmp/akademija-test-$SHA                 # takes a few minutes
@@ -62,11 +63,19 @@ docker save akademija-test/app:$SHA | gzip > akademija-test-app-$SHA.tar.gz
 sha256sum akademija-test-app-$SHA.tar.gz > akademija-test-app-$SHA.tar.gz.sha256
 tar -czf akademija-test-files-$SHA.tar.gz -C /tmp/akademija-test-$SHA \
   docker-compose.test-server.yml .env.test-server.example docker/test-server tools/test-server
+tar -xzOf akademija-test-files-$SHA.tar.gz | tr -cd '\r' | wc -c    # must print 0 (no CRLF)
 ```
 
 - `git archive` takes the committed files only — no local `vendor/`, no `.env`, nothing uncommitted.
-- The build stops with an error on purpose if Debugbar would be installed or a built JS/CSS bundle is
-  missing.
+- **Line endings:** the two `-c` options make `git archive` write the committed bytes (LF), as a Linux
+  checkout on production has them. Without them, Git for Windows (`core.autocrlf=true`) writes
+  **CRLF into every text file** of the archive — the app code, Blade views and JS/CSS bundles in the
+  image, and the env example, Caddyfile and compose file in the files package (on the first server
+  setup this gave `DB_DATABASE=akademija_test\r` and stopped the prepare script). The test-server
+  files also have `eol=lf` in `.gitattributes`; the last line above checks the package, and the build
+  stops if key files of the image have CRLF.
+- The build stops with an error on purpose if Debugbar would be installed, a built JS/CSS bundle is
+  missing, or the code has CRLF line endings.
 - Result: `akademija-test-app-<SHA>.tar.gz` (the image), its `.sha256`, and
   `akademija-test-files-<SHA>.tar.gz` (compose file, Caddyfile, this README, the env example, the
   preparation script).
@@ -88,8 +97,10 @@ scp <the dump file> root@SERVER_IP:/root/akademija-test-dump.sql      # not insi
 
 ```bash
 uname -m                                  # x86_64 expected (the image is linux/amd64)
-free -h                                   # "available" should be well above 2.5 GB (our limits + fpl-live)
-docker version --format '{{.Server.Version}}' && docker compose version     # Compose v2 ("v2.x")
+free -h                                   # "available" should be above ~2.2 GB: our limits add up to 2.13 GB
+                                          # (app 1 GB + db 1 GB + proxy 128 MB); they are caps, not reserved
+docker version --format '{{.Server.Version}}' && docker compose version     # Compose v2.x or newer: v5.x is
+                                          # the same CLI (this setup was checked with v2.7.0 and v5.6.0)
 docker ps --format '{{.ID}} {{.Names}} {{.Image}} {{.CreatedAt}} {{.Ports}}' | tee /root/docker-ps-before.txt
                                           # all running containers (fpl-live's among them), kept for later
                                           # (CreatedAt, not Status: "Up 2 hours" changes by itself)
@@ -104,6 +115,9 @@ mkdir -p /opt/akademija-test/incoming && cd /opt/akademija-test        # never /
 (cd incoming && sha256sum -c akademija-test-app-<SHA>.tar.gz.sha256)   # must print "…tar.gz: OK"
 gunzip -c incoming/akademija-test-app-<SHA>.tar.gz | docker load      # "Loaded image: akademija-test/app:<SHA>"
 tar --no-same-owner -xzf incoming/akademija-test-files-<SHA>.tar.gz -C /opt/akademija-test   # files owned by root
+grep -rlI $'\r' docker-compose.test-server.yml .env.test-server.example docker tools || echo "no CRLF: OK"
+      # must say OK; if it lists files, the package was built without the LF options of section 2:
+      # build it again (or, as a stopgap, sed -i 's/\r$//' on each listed file)
 cp -n .env.test-server.example .env.test-server && chmod 600 .env.test-server
 ```
 
@@ -118,6 +132,13 @@ Edit `.env.test-server` (`nano .env.test-server`) and fill in every `<...>`:
 quotes), `APP_KEY` (make one with `echo "base64:$(openssl rand -base64 32)"`),
 `APP_URL=http://SERVER_IP:8080` (the real IP), `DB_PASSWORD`, `DB_ROOT_PASSWORD` (two different random
 passwords, e.g. `openssl rand -base64 24`, in single quotes), `MAIL_FROM_ADDRESS`.
+Check that no placeholder is left (comment lines are skipped):
+
+```bash
+grep -nE '^[^#].*<' .env.test-server || echo "all placeholders filled"
+grep -c $'\r' .env.test-server      # must print 0; nano keeps CRLF if the file had it:
+                                    # then sed -i 's/\r$//' .env.test-server
+```
 
 **c. The `dc` helper** — every Docker command in this guide goes through it, so it always targets this
 project and never `fpl-live`. Define it in every new SSH session (or add it to `/root/.bashrc`):
@@ -142,11 +163,19 @@ password. Add the ufw rule anyway, so the firewall rules document what is open:
 ufw allow 8080/tcp comment 'akademija-test (Docker publishes it regardless of ufw)'
 ufw status numbered                        # shows the new rule; nothing else changed
 ```
+If the rule was already added earlier (IPv4 and `(v6)`), skip the `allow` line and only check with
+`ufw status numbered`. The rule opens nothing by itself: nothing listens on 8080 until the proxy starts
+(section 4, step 11).
 To close the site to everyone: `dc stop proxy` (section 8). Limiting 8080 to a few IP addresses would
 need rules in Docker's `DOCKER-USER` chain, which affect every container on the server — not done here;
 ask before changing it.
 
 ## 4. First start (in this order)
+
+**The proxy stays stopped until step 11**, i.e. until the import and the preparation are done: step 1
+starts only `db`, step 4 only `app` (and `db`, which it needs); the proxy is never a dependency of
+either. Never run a plain `dc up -d` (without a service name) before step 11: it would start the proxy
+too. Before step 11, `dc ps -a` lists no `proxy`, and `ss -ltnp | grep -E ':8080\b'` prints nothing.
 
 | # | Command | What it does / what to expect |
 |---|---|---|
@@ -316,6 +345,7 @@ after about a minute it works again (reload the page).
 | close the site for everyone | `dc stop proxy` | `dc up -d proxy` opens it again |
 | the Caddyfile was changed (new files bundle) | `dc up -d --no-deps --force-recreate proxy` | the Caddyfile is mounted as one file: a new copy is only seen by a new proxy container (`dc up -d proxy` alone keeps the old one) |
 | stop everything of this project | `dc stop` | data stays; `dc up -d --no-build` starts it again |
+| the prepare script stops with a `connected database is … not --database=…` message although the name is right (a hidden `\r` at its end; fixed in the script since), or Caddy / compose report odd errors | CRLF line endings: `grep -rlI $'\r' /opt/akademija-test/.env.test-server /opt/akademija-test/docker-compose.test-server.yml /opt/akademija-test/docker /opt/akademija-test/tools` lists the files; `sed -i 's/\r$//' <file>` on each, then for the Caddyfile `dc up -d --no-deps --force-recreate proxy` | the files package was built without the LF options of section 2 (seen on the first server setup); nothing is changed by the refused run |
 | `dc up` was interrupted (error, timeout) and `dc ps -a` shows the app as `Created`, or with a name like `1a2b3c_akademija-test-app-1` | run the same `dc up -d --no-build app` again; if the odd name stays: `dc up -d --no-build --force-recreate app` | recreates only the app container; the database and the storage volume (uploads, sessions) stay (seen in the local rehearsal) |
 | admin lists briefly show an error, `429 Too Many Requests` in `dc logs app` | wait a minute | existing application behaviour: **60 admin-API requests per minute for all users together** (`RateLimiter::for('api')` has no per-user key); several testers clicking through lists at the same time can reach it |
 
@@ -397,9 +427,11 @@ Nothing changes in `fpl-live` until then. When the subdomain exists (DNS record 
 
 ## Deploy checklist
 
-- [ ] Section 2 on your computer: clean `deploy/test-server`, image built from `git archive`, `.sha256` made
+- [ ] Section 2 on your computer: clean `deploy/test-server`, image built from the LF `git archive`
+      (`-c core.autocrlf=false -c core.eol=lf`), `.sha256` made, files package check prints `0` (no CRLF)
 - [ ] Section 3a: `docker ps` saved to `/root/docker-ps-before.txt`, port 8080 free, enough memory
-- [ ] Section 3b: `sha256sum -c` OK, image loaded, `.env.test-server` filled (no `<...>` left), mode 600
+- [ ] Section 3b: `sha256sum -c` OK, image loaded, "no CRLF: OK", `.env.test-server` filled (no `<...>`
+      left, no CRLF), mode 600
 - [ ] Section 3c: `dc config` OK, exactly one published port (proxy 8080)
 - [ ] Section 3d: ufw rule added
 - [ ] Section 4 steps 1–4: db healthy, dump imported (counts match), app started
