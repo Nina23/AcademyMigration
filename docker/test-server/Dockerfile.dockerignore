@@ -1,0 +1,36 @@
+# Build context exclusions for docker/test-server/Dockerfile only (BuildKit reads
+# <Dockerfile>.dockerignore; the dev build keeps using the repository root without one).
+
+# Never in the image: git data, dependencies built elsewhere, secrets, data.
+.git
+vendor
+node_modules
+.env
+.env.*
+backups
+*.sql
+*.sql.gz
+
+# Runtime state (recreated in the image, storage is a volume on the server).
+storage/app/*
+storage/framework/*
+storage/logs/*
+storage/golden-master
+storage/debugbar
+bootstrap/cache/*.php
+public/storage
+public/hot
+public/mix-manifest.json
+
+# Development and test files the server does not need.
+tests
+phpunit.xml
+.phpunit.cache
+.phpunit.result.cache
+docker-compose.yml
+docker-compose.s3.yml
+docker-compose.override.yml
+tools/s3-test
+coverage
+.idea
+.vscode
